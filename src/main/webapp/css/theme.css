@@ -2,7 +2,7 @@
 
 /* Logo */
 h1 a {
-    background-image:url('/images/wflogo.png');
+    background-image:url('../images/wflogo.png');
     min-height:0;
     height:40px;
 }
@@ -20,7 +20,7 @@ h1{
 
 }
 .javachap input.text, .javachap textarea.textarea{
-    background:#FFFFFF url(images/fieldbg.gif) repeat-x top;
+    background:#FFFFFF url(../images/fieldbg.gif) repeat-x top;
 }
 .javachap .focused{
     background-color:#ffc62d;

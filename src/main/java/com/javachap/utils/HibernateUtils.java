@@ -24,7 +24,7 @@ public class HibernateUtils {
         }
     }
 
-    public static final ThreadLocal<Session> session = new ThreadLocal<>();
+    private static final ThreadLocal<Session> session = new ThreadLocal<>();
 
     public static Session currentSession() throws HibernateException {
         Session s = session.get();

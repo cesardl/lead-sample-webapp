@@ -44,7 +44,7 @@ h1 a {
     min-height:40px;
     height:40px;
     display:block;
-    background:url(/images/wflogo.png) no-repeat left top;
+    background:url(../images/wflogo.png) no-repeat left top;
     overflow:hidden;
 }
 
@@ -69,7 +69,7 @@ img,a img {
     text-align:right;
     line-height:auto;
     background-color:red;
-    background-image:url(/images/wflogo.png);
+    background-image:url(../images/wflogo.png);
     background-repeat:no-repeat;
     background-position:5px center;
     width:70%;
@@ -226,7 +226,7 @@ input.text,textarea.textarea,.firefox select.select {
     border-left:1px solid #c3c3c3;
     border-right:1px solid #c3c3c3;
     border-bottom:1px solid #ddd;
-    background:#fff url(/images/fieldbg.gif) repeat-x top;
+    background:#fff url(../images/fieldbg.gif) repeat-x top;
 }
 
 input.text,input.file {
@@ -602,7 +602,7 @@ body.embed {
 
 * html h1 a,* html .footer a {
     background-image:none;
-    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/images/wflogo.png",sizingMethod=crop);
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/wflogo.png",sizingMethod=crop);
 }
 
 .hide,.noI .instruct,.embed #top,.embed #bottom,.embed #logo {

@@ -25,7 +25,6 @@ public class LanguageAction extends Action {
             locale = Locale.ENGLISH;
         }
         request.getSession().setAttribute("display", locale);
-        ActionForward forward = mapping.findForward("leadListing");
-        return forward;
+        return mapping.findForward("leadListing");
     }
 }

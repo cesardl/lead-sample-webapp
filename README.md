@@ -1,6 +1,6 @@
 # Lead Sample Webapp
 
-CRUD application with Struts and MySQL.
+CRUD application with Struts and MySQL created by Javachap and upgraded by me.
 
 ## Environment
 

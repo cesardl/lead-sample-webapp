@@ -7,6 +7,7 @@
 
         <title><bean:message key="label.leadListing.title" locale="display"/></title>
         <!-- CSS -->
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/theme.css" type="text/css" />
 

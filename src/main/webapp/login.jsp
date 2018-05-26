@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title><bean:message key="label.login.title" locale="display"/></title>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/theme.css" type="text/css" />
     </head>

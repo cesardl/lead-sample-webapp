@@ -26,7 +26,6 @@
         <many-to-one name="category" class="com.javachap.domain.Category"
                      column="LD_CATEGORY_ID" fetch="join" lazy="false" not-null="true"/>
 
-
         <subclass name="com.javachap.domain.impl.LeadImpl" discriminator-value="1"/>
 
     </class>

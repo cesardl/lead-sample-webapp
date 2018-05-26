@@ -20,8 +20,8 @@ public class CategoryServiceImpl extends ServiceImpl implements CategoryService 
 
     private static final long serialVersionUID = 380026904541710183L;
     private String ALL_CATEGORIES_QUERY = "from Category category";
-    private String CATEGORY_BY_NAME_QUERY =
-            "from Category category where category.name = :CategoryName";
+    private String CATEGORY_BY_NAME_QUERY = "from Category category where category.name = :CategoryName";
+
     /**
      * Singleton Instance of CategoryServiceImpl
      */

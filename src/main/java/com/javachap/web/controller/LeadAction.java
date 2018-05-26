@@ -23,7 +23,7 @@ public class LeadAction extends SecuredAction {
                                     HttpServletRequest request, HttpServletResponse response) {
 
         LeadForm leadForm = (LeadForm) form;
-        ActionForward forward = null;
+        ActionForward forward;
 
         List<Category> categoryList = ServiceUtils.getCategoryService().getAllCategories();
         request.setAttribute("categoryList", categoryList);
@@ -66,7 +66,7 @@ public class LeadAction extends SecuredAction {
                 forward = mapping.findForward("leadCreateEdit");
             } else {
                 User user = (User) request.getSession().getAttribute("user");
-                Lead lead = null;
+                Lead lead;
                 LeadService leadService = ServiceUtils.getLeadService();
                 Long leadId = leadForm.getLeadId();
                 if (leadId != null && leadId > 0) {
