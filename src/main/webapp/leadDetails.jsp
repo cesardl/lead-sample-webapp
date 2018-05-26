@@ -102,13 +102,13 @@
                                  title="Edit Lead" onclick="actionValue('edit')">
                         <bean:message key="button.label.edit" locale="display" />
                     </html:submit>
-                    <logic:equal name="lead" property="status" value="New" >
+                    <logic:equal name="lead" property="status" value="NEW" >
                         <html:submit styleId="publishForm" styleClass="btTxt imgStyle" tabindex="7"
                                      title="Publish Lead" disabled="false" onclick="actionValue('publish')">
                             <bean:message key="button.label.publish" locale="display" />
                         </html:submit>
                     </logic:equal>
-                    <logic:notEqual name="lead" property="status" value="New" >
+                    <logic:notEqual name="lead" property="status" value="NEW" >
                         <html:submit styleId="publishForm" styleClass="btTxt imgStyle" tabindex="7"
                                      title="Publish Lead" disabled="true">
                             <bean:message key="button.label.publish" locale="display" />

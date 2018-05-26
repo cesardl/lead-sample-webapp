@@ -1,9 +1,9 @@
 package com.javachap.service;
 
-import java.util.List;
-
 import com.javachap.domain.Lead;
 import com.javachap.domain.User;
+
+import java.util.List;
 
 public interface LeadService extends Service {
 

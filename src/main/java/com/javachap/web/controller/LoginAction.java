@@ -17,18 +17,20 @@ public class LoginAction extends Action {
         LoginForm loginForm = (LoginForm) form;
         String action = loginForm.getAction();
         ActionForward forward = mapping.getInputForward();
-        if (("login").equalsIgnoreCase(action)) {
+        if ("login".equalsIgnoreCase(action)) {
             String email = loginForm.getEmail();
             String password = loginForm.getPassword();
+
             User user = ServiceUtils.getUserService().authenticate(email, password);
-            if (user != null) {
-                request.getSession(true).setAttribute("user", user);
-                forward = mapping.findForward("home");
-            } else {
+
+            if (user == null) {
                 ActionErrors errors = new ActionErrors();
                 errors.add(ActionErrors.GLOBAL_MESSAGE,
                         new ActionMessage("error.login.failed"));
                 saveErrors(request, errors);
+            } else {
+                request.getSession(true).setAttribute("user", user);
+                forward = mapping.findForward("home");
             }
         }
         return forward;

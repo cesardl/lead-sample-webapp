@@ -17,13 +17,16 @@ public class LanguageAction extends Action {
                                  HttpServletRequest request, HttpServletResponse response) {
 
         LanguageForm languageForm = (LanguageForm) form;
-        Locale locale = null;
+        Locale locale;
 
-        if (("french").equals(languageForm.getLanguage())) {
+        if ("french".equals(languageForm.getLanguage())) {
             locale = Locale.FRENCH;
+        } else if ("spanish".equals(languageForm.getLanguage())) {
+            locale = new Locale("es", "ES");
         } else {
             locale = Locale.ENGLISH;
         }
+
         request.getSession().setAttribute("display", locale);
         return mapping.findForward("leadListing");
     }

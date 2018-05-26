@@ -13,7 +13,7 @@ public class LoginForm extends BaseForm {
     protected String password = null;
 
     public String getEmail() {
-        return (this.email);
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -21,7 +21,7 @@ public class LoginForm extends BaseForm {
     }
 
     public String getPassword() {
-        return (this.password);
+        return this.password;
     }
 
     public void setPassword(String password) {

@@ -30,6 +30,8 @@ public class CategoryImpl extends DomainImpl implements Category {
         return "CategoryImpl[" +
                 "description = " + description +
                 " name = " + name +
+                " createdDate = " + createdDate +
+                " modifiedDate = " + modifiedDate +
                 "]";
     }
 }

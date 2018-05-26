@@ -4,10 +4,14 @@ import com.javachap.service.impl.CategoryServiceImpl;
 import com.javachap.service.impl.LeadServiceImpl;
 import com.javachap.service.impl.UserServiceImpl;
 
-public class ServiceUtils {
+public final class ServiceUtils {
+
+    private ServiceUtils() {
+    }
 
     /**
      * Gets Instance of UserService
+     *
      * @return UserService Instance
      */
     public static UserService getUserService() {
@@ -16,6 +20,7 @@ public class ServiceUtils {
 
     /**
      * Gets Instance of LeadService
+     *
      * @return LeadService Instance
      */
     public static LeadService getLeadService() {
@@ -24,6 +29,7 @@ public class ServiceUtils {
 
     /**
      * Gets Instance of CategoryService
+     *
      * @return CategoryService Instance
      */
     public static CategoryService getCategoryService() {

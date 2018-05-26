@@ -1,4 +1,4 @@
-# Lead Sample Webapp [![Build Status](https://travis-ci.org/cesardl/lead-sample-webapp.svg?branch=master)](https://travis-ci.org/cesardl/lead-sample-webapp)
+# Lead Sample Webapp [![Build Status](https://travis-ci.org/cesardl/lead-sample-webapp.svg?branch=master)](https://travis-ci.org/cesardl/lead-sample-webapp) [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.javachap.lead-sample-webapp&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.javachap.lead-sample-webapp) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.javachap.lead-sample-webapp&metric=coverage)](https://sonarcloud.io/component_measures?id=com.javachap.lead-sample-webapp&metric=coverage)
 
 CRUD application with Struts and MySQL created by Javachap and upgraded by me.
 

@@ -18,12 +18,12 @@ public class LeadListingAction extends SecuredAction {
 
         LeadListingForm leadListingForm = (LeadListingForm) form;
 
-        if (("delete").equalsIgnoreCase(leadListingForm.getAction())) {
+        if ("delete".equalsIgnoreCase(leadListingForm.getAction())) {
 
             Long leadId = leadListingForm.getLeadId();
             delete(leadId, request);
 
-        } else if (("deleteLeads").equalsIgnoreCase(leadListingForm.getAction())) {
+        } else if ("deleteLeads".equalsIgnoreCase(leadListingForm.getAction())) {
             String[] leadIds = leadListingForm.getLeadIds();
             for (String leadIdString : leadIds) {
 
@@ -39,9 +39,9 @@ public class LeadListingAction extends SecuredAction {
         return mapping.getInputForward();
     }
 
-    public void delete(Long leadId, HttpServletRequest request) {
+    private void delete(Long leadId, HttpServletRequest request) {
         LeadService leadService = ServiceUtils.getLeadService();
-        boolean deleteSuccessfull = false;
+        boolean deleteSuccessful = false;
         if (leadId != null && leadId > 0) {
             Lead lead = leadService.getLead(leadId);
             if (lead != null) {
@@ -50,10 +50,10 @@ public class LeadListingAction extends SecuredAction {
                 messages.add(ActionMessages.GLOBAL_MESSAGE,
                         new ActionMessage("message.lead.delete"));
                 saveMessages(request, messages);
-                deleteSuccessfull = true;
+                deleteSuccessful = true;
             }
         }
-        if (!deleteSuccessfull) {
+        if (!deleteSuccessful) {
             ActionErrors errors = new ActionErrors();
             errors.add(ActionErrors.GLOBAL_MESSAGE,
                     new ActionMessage("error.lead.deleted"));

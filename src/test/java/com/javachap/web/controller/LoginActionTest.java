@@ -16,7 +16,6 @@ public class LoginActionTest extends MockStrutsTestCase {
     }
 
     public void testSuccessfulLogin() {
-
         LoginForm loginForm = new LoginForm();
         loginForm.setEmail("cesar.dl88@gmail.com");
         loginForm.setPassword("123456");
@@ -25,13 +24,30 @@ public class LoginActionTest extends MockStrutsTestCase {
         setRequestPathInfo("/login");
         setActionForm(loginForm);
         actionPerform();
+
         verifyForward("home");
 
         User result = (User) getSession().getAttribute("user");
-
         assertEquals("Cesar", result.getFirstName());
         assertEquals("Diaz", result.getLastName());
 
         verifyNoActionErrors();
+    }
+
+    public void testFailedLogin() {
+        LoginForm loginForm = new LoginForm();
+        loginForm.setEmail("cesar.dl88@gmail.com");
+        loginForm.setPassword("xxxxxx");
+        loginForm.setAction("login");
+
+        setRequestPathInfo("/login");
+        setActionForm(loginForm);
+        actionPerform();
+
+        verifyInputForward();
+
+        verifyActionErrors(new String[]{"error.login.failed"});
+
+        assertNull(getSession().getAttribute("user"));
     }
 }

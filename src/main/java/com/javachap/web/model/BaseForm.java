@@ -11,7 +11,7 @@ public class BaseForm extends ActionForm {
     protected String action = null;
 
     public String getAction() {
-        return (this.action);
+        return this.action;
     }
 
     public void setAction(String action) {

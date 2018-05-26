@@ -1,8 +1,8 @@
 package com.javachap.service;
 
-import java.util.List;
-
 import com.javachap.domain.Category;
+
+import java.util.List;
 
 public interface CategoryService extends Service {
 

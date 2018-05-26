@@ -78,7 +78,7 @@ public class LeadForm extends BaseForm {
     }
 
     public Long getLeadId() {
-        return (this.leadId);
+        return this.leadId;
     }
 
     public void setLeadId(Long leadId) {

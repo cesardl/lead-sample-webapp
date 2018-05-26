@@ -16,10 +16,10 @@ public class UserImpl extends DomainImpl implements User {
     public String getFirstName() {
         return firstName;
     }
+
     /* (non-Javadoc)
      * @see com.javachap.domain.impl.User#setFirstName(java.lang.String)
      */
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -30,10 +30,10 @@ public class UserImpl extends DomainImpl implements User {
     public String getLastName() {
         return lastName;
     }
+
     /* (non-Javadoc)
      * @see com.javachap.domain.impl.User#setLastName(java.lang.String)
      */
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -44,10 +44,10 @@ public class UserImpl extends DomainImpl implements User {
     public String getEmail() {
         return email;
     }
+
     /* (non-Javadoc)
      * @see com.javachap.domain.impl.User#setEmail(java.lang.String)
      */
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -58,10 +58,10 @@ public class UserImpl extends DomainImpl implements User {
     public String getPassword() {
         return password;
     }
+
     /* (non-Javadoc)
      * @see com.javachap.domain.impl.User#setPassword(java.lang.String)
      */
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -74,6 +74,8 @@ public class UserImpl extends DomainImpl implements User {
                 " firstName = " + firstName +
                 " lastName = " + lastName +
                 " password = " + password +
+                " createdDate = " + createdDate +
+                " modifiedDate = " + modifiedDate +
                 "]";
     }
 }

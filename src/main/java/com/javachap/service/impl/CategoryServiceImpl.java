@@ -1,26 +1,24 @@
-/**
- * 
- */
 package com.javachap.service.impl;
 
-import java.util.List;
-
+import com.javachap.domain.Category;
+import com.javachap.service.CategoryService;
+import com.javachap.service.exceptions.ServiceException;
+import com.javachap.utils.HibernateUtils;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import com.javachap.domain.Category;
-import com.javachap.service.CategoryService;
-import com.javachap.utils.HibernateUtils;
+
+import java.util.List;
 
 /**
  * @author Varma
- *
  */
-public class CategoryServiceImpl extends ServiceImpl implements CategoryService {
+public class CategoryServiceImpl extends ServiceImpl<Category> implements CategoryService {
 
     private static final long serialVersionUID = 380026904541710183L;
-    private String ALL_CATEGORIES_QUERY = "from Category category";
-    private String CATEGORY_BY_NAME_QUERY = "from Category category where category.name = :CategoryName";
+    private static final String ALL_CATEGORIES_QUERY = "from Category category";
+    private static final String CATEGORY_BY_NAME_QUERY = "from Category category where category.name = :CategoryName";
 
     /**
      * Singleton Instance of CategoryServiceImpl
@@ -46,13 +44,13 @@ public class CategoryServiceImpl extends ServiceImpl implements CategoryService 
      */
     @SuppressWarnings("unchecked")
     public List<Category> getAllCategories() {
-        List<Category> categories = null;
+        List<Category> categories;
         try {
             Session session = HibernateUtils.currentSession();
             Query query = session.createQuery(ALL_CATEGORIES_QUERY);
             categories = (List<Category>) query.list();
             HibernateUtils.closeSession();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             throw new ServiceException(e);
         }
         return categories;
@@ -62,12 +60,12 @@ public class CategoryServiceImpl extends ServiceImpl implements CategoryService 
      * @see com.javachap.service.CategoryService#getCategory(java.lang.Long)
      */
     public Category getCategory(Long categoryId) {
-        Category category = null;
+        Category category;
         try {
             Session session = HibernateUtils.currentSession();
             category = (Category) session.get(Category.class, categoryId);
             HibernateUtils.closeSession();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             throw new ServiceException(e);
         }
         return category;
@@ -85,34 +83,11 @@ public class CategoryServiceImpl extends ServiceImpl implements CategoryService 
             @SuppressWarnings("unchecked")
             List<Category> list = (List<Category>) query.list();
             if (list.size() == 1) {
-                category = (Category) list.get(0);
+                category = list.get(0);
             }
             HibernateUtils.closeSession();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             throw new ServiceException(e);
-        }
-        return category;
-    }
-
-    /* (non-Javadoc)
-     * @see com.javachap.service.CategoryService#save(com.javachap.domain.Category)
-     */
-    public Category save(Category category) {
-        Session session = HibernateUtils.currentSession();
-        Transaction tx = null;
-        boolean rollback = true;
-        try {
-            tx = session.beginTransaction();
-            session.save(category);
-            tx.commit();
-            rollback = false;
-        } catch (Exception e) {
-            throw new ServiceException(e);
-        } finally {
-            if (rollback && tx != null) {
-                tx.rollback();
-            }
-            HibernateUtils.closeSession();
         }
         return category;
     }

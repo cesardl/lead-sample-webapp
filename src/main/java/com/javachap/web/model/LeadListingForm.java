@@ -13,7 +13,7 @@ public class LeadListingForm extends BaseForm {
     protected String[] leadIds = null;
 
     public Long getLeadId() {
-        return (this.leadId);
+        return this.leadId;
     }
 
     public void setLeadId(Long leadId) {
@@ -21,7 +21,7 @@ public class LeadListingForm extends BaseForm {
     }
 
     public String[] getLeadIds() {
-        return (this.leadIds);
+        return this.leadIds;
     }
 
     public void setLeadIds(String[] leadIds) {

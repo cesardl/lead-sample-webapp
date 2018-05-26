@@ -4,6 +4,9 @@
 <html:link action="/language" tabindex="2" styleId="lang" styleClass="linkColor">
     <html:param name="language" value="english"/>English
 </html:link>
+<html:link action="/language" tabindex="3" styleId="lang" styleClass="linkColor">
+    <html:param name="language" value="spanish"/>Spanish
+</html:link>
 
 <logic:present name="user" scope="session">
     <html:link action="/logout" tabindex="3" styleId="logOut" styleClass="linkColor">

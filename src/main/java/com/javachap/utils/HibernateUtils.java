@@ -12,19 +12,21 @@ public class HibernateUtils {
     private static final Log LOG = LogFactory.getLog(HibernateUtils.class);
 
     private static final SessionFactory sessionFactory;
+    private static final ThreadLocal<Session> session = new ThreadLocal<>();
+
+    private HibernateUtils() {
+    }
 
     static {
         try {
             // Create the SessionFactory
             sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
+        } catch (HibernateException ex) {
             // Make sure you log the exception, as it might be swallowed
             LOG.error("Initial SessionFactory creation failed.", ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
-
-    private static final ThreadLocal<Session> session = new ThreadLocal<>();
 
     public static Session currentSession() throws HibernateException {
         Session s = session.get();

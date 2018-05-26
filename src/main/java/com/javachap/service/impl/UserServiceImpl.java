@@ -2,13 +2,13 @@ package com.javachap.service.impl;
 
 import com.javachap.domain.User;
 import com.javachap.service.UserService;
+import com.javachap.service.exceptions.ServiceException;
 import com.javachap.utils.HibernateUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-public class UserServiceImpl extends ServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<User> implements UserService {
 
     private static final long serialVersionUID = 4889152297004460837L;
 
@@ -56,27 +56,6 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             HibernateUtils.closeSession();
         } catch (HibernateException e) {
             throw new ServiceException(e);
-        }
-        return user;
-    }
-
-    public User save(User user) {
-
-        Session session = HibernateUtils.currentSession();
-        Transaction tx = null;
-        boolean rollback = true;
-        try {
-            tx = session.beginTransaction();
-            session.save(user);
-            tx.commit();
-            rollback = false;
-        } catch (Exception e) {
-            throw new ServiceException(e);
-        } finally {
-            if (rollback && tx != null) {
-                tx.rollback();
-            }
-            HibernateUtils.closeSession();
         }
         return user;
     }

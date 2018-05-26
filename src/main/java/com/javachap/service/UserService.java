@@ -4,6 +4,7 @@ import com.javachap.domain.User;
 
 /**
  * UserService
+ *
  * @author Varma
  */
 public interface UserService extends Service {

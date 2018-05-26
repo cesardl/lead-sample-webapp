@@ -100,19 +100,19 @@ public class LeadImpl extends DomainImpl implements Lead {
 
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("LeadImpl[");
-        buffer.append("category = ").append(category);
-        buffer.append(" description = ").append(description);
-        buffer.append(" email = ").append(email);
-        buffer.append(" firstName = ").append(firstName);
-        buffer.append(" lastName = ").append(lastName);
-        buffer.append(" owner = ").append(owner);
-        buffer.append(" phone = ").append(phone);
-        buffer.append(" price = ").append(price);
-        buffer.append(" status = ").append(status);
-        buffer.append(" title = ").append(title);
-        buffer.append("]");
-        return buffer.toString();
+        return "LeadImpl[" +
+                "category = " + category +
+                " description = " + description +
+                " email = " + email +
+                " firstName = " + firstName +
+                " lastName = " + lastName +
+                " owner = " + owner +
+                " phone = " + phone +
+                " price = " + price +
+                " status = " + status +
+                " title = " + title +
+                " createdDate = " + createdDate +
+                " modifiedDate = " + modifiedDate +
+                "]";
     }
 }

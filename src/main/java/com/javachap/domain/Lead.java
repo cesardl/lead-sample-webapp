@@ -2,11 +2,6 @@ package com.javachap.domain;
 
 public interface Lead extends Domain {
 
-    enum Status {
-
-        New, Published
-    }
-
     String getTitle();
 
     void setTitle(String title);
@@ -46,4 +41,9 @@ public interface Lead extends Domain {
     String getStatus();
 
     void setStatus(String status);
+
+    enum Status {
+
+        NEW, PUBLISHED
+    }
 }

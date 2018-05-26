@@ -78,7 +78,7 @@ CREATE TABLE `LEAD` (
 
 LOCK TABLES `LEAD` WRITE;
 /*!40000 ALTER TABLE `LEAD` DISABLE KEYS */;
-INSERT INTO `LEAD` VALUES (1,'Mi first lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','New',2,3,NULL,NULL);
+INSERT INTO `LEAD` VALUES (1,'Mi first lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL);
 /*!40000 ALTER TABLE `LEAD` ENABLE KEYS */;
 UNLOCK TABLES;
 

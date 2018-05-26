@@ -5,19 +5,20 @@ import java.util.Date;
 
 /**
  * Base Domain Object
+ *
  * @author Varma
  */
 public interface Domain extends Serializable {
 
-    void setId(Long id);
-
     Long getId();
 
-    void setCreatedDate(Date createdDate);
+    void setId(Long id);
 
     Date getCreatedDate();
 
-    void setModifiedDate(Date modifiedDate);
+    void setCreatedDate(Date createdDate);
 
     Date getModifiedDate();
+
+    void setModifiedDate(Date modifiedDate);
 }
