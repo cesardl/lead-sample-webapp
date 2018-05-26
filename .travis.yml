@@ -26,7 +26,7 @@ before_install:
 
 script:
   - mvn clean verify
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then sonar-scanner -X; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then sonar-scanner; fi
 
 cache:
   directories:

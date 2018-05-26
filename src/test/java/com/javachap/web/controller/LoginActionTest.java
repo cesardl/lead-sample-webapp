@@ -1,7 +1,7 @@
 package com.javachap.web.controller;
 
+import com.javachap.domain.User;
 import com.javachap.web.model.LoginForm;
-import org.apache.struts.action.ActionForm;
 import servletunit.struts.MockStrutsTestCase;
 
 /**
@@ -16,15 +16,22 @@ public class LoginActionTest extends MockStrutsTestCase {
     }
 
     public void testSuccessfulLogin() {
-        setRequestPathInfo("/login");
+
         LoginForm loginForm = new LoginForm();
         loginForm.setEmail("cesar.dl88@gmail.com");
         loginForm.setPassword("123456");
         loginForm.setAction("login");
+
+        setRequestPathInfo("/login");
         setActionForm(loginForm);
-//        addRequestParameter("email","cesar.dl88@gmail.com");
-//        addRequestParameter("password","123456");
         actionPerform();
         verifyForward("home");
+
+        User result = (User) getSession().getAttribute("user");
+
+        assertEquals("Cesar", result.getFirstName());
+        assertEquals("Diaz", result.getLastName());
+
+        verifyNoActionErrors();
     }
 }
