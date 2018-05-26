@@ -100,13 +100,29 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>3.8.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/strutstestcase/strutstestcase -->
+        <dependency>
+            <groupId>strutstestcase</groupId>
+            <artifactId>strutstestcase</artifactId>
+            <version>2.0-1.1-2.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
         <finalName>lead-sample-webapp</finalName>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>WEB-INF/*.xml</include>
+                </includes>
+            </testResource>
+        </testResources>
 
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>

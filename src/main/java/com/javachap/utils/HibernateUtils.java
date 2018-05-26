@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtils {
 
-    private static Log log = LogFactory.getLog(HibernateUtils.class);
+    private static final Log LOG = LogFactory.getLog(HibernateUtils.class);
 
     private static final SessionFactory sessionFactory;
 
@@ -19,7 +19,7 @@ public class HibernateUtils {
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
-            log.error("Initial SessionFactory creation failed.", ex);
+            LOG.error("Initial SessionFactory creation failed.", ex);
             throw new ExceptionInInitializerError(ex);
         }
     }

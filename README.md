@@ -1,4 +1,4 @@
-# Lead Sample Webapp
+# Lead Sample Webapp [![Build Status](https://travis-ci.org/cesardl/lead-sample-webapp.svg?branch=master)](https://travis-ci.org/cesardl/lead-sample-webapp)
 
 CRUD application with Struts and MySQL created by Javachap and upgraded by me.
 
