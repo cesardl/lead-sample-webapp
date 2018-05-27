@@ -39,7 +39,7 @@ public class LeadListingAction extends SecuredAction {
         return mapping.getInputForward();
     }
 
-    private void delete(Long leadId, HttpServletRequest request) {
+    private void delete(final Long leadId, final HttpServletRequest request) {
         LeadService leadService = ServiceUtils.getLeadService();
         boolean deleteSuccessful = false;
         if (leadId != null && leadId > 0) {

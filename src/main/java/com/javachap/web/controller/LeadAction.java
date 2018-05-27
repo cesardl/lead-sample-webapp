@@ -20,6 +20,15 @@ public class LeadAction extends SecuredAction {
 
     private static final Logger LOG = LoggerFactory.getLogger(LeadAction.class);
 
+    // Form property
+    private static final String FORM_PROPERTY_PRICE = "price";
+
+    // Forwards
+    private static final String FORWARD_EDIT_LEAD = "leadCreateEdit";
+
+    // Messages
+    private static final String ERROR_LABEL_MANDATORY = "error.label.mandatory";
+
     public ActionForward lmsExecute(ActionMapping mapping, ActionForm form,
                                     HttpServletRequest request, HttpServletResponse response) {
 
@@ -33,80 +42,7 @@ public class LeadAction extends SecuredAction {
         LOG.info("Form action '{}'", leadFormAction);
 
         if ("save".equals(leadFormAction)) {
-            ActionErrors errors = new ActionErrors();
-            if ("Select any Category".equals(leadForm.getCategory())) {
-                errors.add("category", new ActionMessage("error.label.mandetory"));
-            }
-            if (leadForm.getTitle().trim().length() < 1 || leadForm.getTitle() == null) {
-                errors.add("title", new ActionMessage("error.label.mandetory"));
-            }
-            if (leadForm.getDescription().trim().length() < 1 || leadForm.getDescription() == null) {
-                errors.add("description", new ActionMessage("error.label.mandetory"));
-            }
-            if (leadForm.getFirstName().trim().length() < 1 || leadForm.getFirstName() == null) {
-                errors.add("firstName", new ActionMessage("error.label.mandetory"));
-            }
-            if (leadForm.getLastName().trim().length() < 1 || leadForm.getLastName() == null) {
-                errors.add("lastName", new ActionMessage("error.label.mandetory"));
-            }
-            if (leadForm.getEmail().trim().length() < 1 || leadForm.getEmail() == null) {
-                errors.add("email", new ActionMessage("error.label.mandetory"));
-            }
-            if (leadForm.getPrice().trim().length() < 1 || leadForm.getPrice() == null) {
-                errors.add("price", new ActionMessage("error.label.mandetory"));
-            } else {
-                try {
-                    float priceValue = Float.parseFloat(leadForm.getPrice());
-                    if (priceValue < 0) {
-                        errors.add("price", new ActionMessage("error.label.greaterThanZero"));
-                    }
-                } catch (NumberFormatException numberFormatException) {
-                    errors.add("price", new ActionMessage("error.label.numberOnly"));
-                }
-            }
-            if (!errors.isEmpty()) {
-                saveErrors(request, errors);
-                forward = mapping.findForward("leadCreateEdit");
-            } else {
-                User user = (User) request.getSession().getAttribute("user");
-                Lead lead;
-                LeadService leadService = ServiceUtils.getLeadService();
-                Long leadId = leadForm.getLeadId();
-                if (leadId != null && leadId > 0) {
-                    lead = leadService.getLead(leadId);
-                    lead.setModifiedDate(new Date());
-
-                    ActionMessages messages = new ActionMessages();
-                    messages.add(ActionMessages.GLOBAL_MESSAGE,
-                            new ActionMessage("message.lead.update"));
-                    saveMessages(request, messages);
-                } else {
-                    lead = new LeadImpl();
-                    lead.setStatus(Lead.Status.NEW.toString());
-                    lead.setCreatedDate(new Date());
-
-                    ActionMessages messages = new ActionMessages();
-                    messages.add(ActionMessages.GLOBAL_MESSAGE,
-                            new ActionMessage("message.lead.insert"));
-                    saveMessages(request, messages);
-                }
-                Long categoryId = Long.parseLong(leadForm.getCategory());
-                LOG.info("Category Id to find: {}", categoryId);
-                Category category = ServiceUtils.getCategoryService().getCategory(categoryId);
-                LOG.info("Category Id to obtained: {}", category.getId());
-                lead.setCategory(category);
-                lead.setTitle(leadForm.getTitle());
-                lead.setDescription(leadForm.getDescription());
-                lead.setFirstName(leadForm.getFirstName());
-                lead.setLastName(leadForm.getLastName());
-                lead.setEmail(leadForm.getEmail());
-                lead.setPhone(leadForm.getPhone());
-                lead.setPrice(Float.parseFloat(leadForm.getPrice()));
-                lead.setOwner(user);
-                lead = leadService.save(lead);
-                LOG.info("Saved lead: {}", lead);
-                forward = mapping.findForward("home");
-            }
+            forward = saveLead(mapping, leadForm, request);
 
         } else if ("cancel".equalsIgnoreCase(leadFormAction)) {
             forward = mapping.findForward("home");
@@ -126,7 +62,7 @@ public class LeadAction extends SecuredAction {
             leadForm.setLeadId(leadId);
 
             LOG.info("Preparing to edit lead {}", lead.getTitle());
-            forward = mapping.findForward("leadCreateEdit");
+            forward = mapping.findForward(FORWARD_EDIT_LEAD);
 
         } else if ("delete".equalsIgnoreCase(leadFormAction)) {
             leadForm.setAction(leadFormAction);
@@ -151,8 +87,85 @@ public class LeadAction extends SecuredAction {
             forward = mapping.getInputForward();
         } else {
             LOG.info("Preparing to create new lead");
-            forward = mapping.findForward("leadCreateEdit");
+            forward = mapping.findForward(FORWARD_EDIT_LEAD);
         }
         return forward;
+    }
+
+    private ActionForward saveLead(final ActionMapping mapping, final LeadForm leadForm, final HttpServletRequest request) {
+        ActionErrors errors = new ActionErrors();
+        if ("Select any Category".equals(leadForm.getCategory())) {
+            errors.add("category", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getTitle().trim().length() < 1 || leadForm.getTitle() == null) {
+            errors.add("title", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getDescription().trim().length() < 1 || leadForm.getDescription() == null) {
+            errors.add("description", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getFirstName().trim().length() < 1 || leadForm.getFirstName() == null) {
+            errors.add("firstName", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getLastName().trim().length() < 1 || leadForm.getLastName() == null) {
+            errors.add("lastName", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getEmail().trim().length() < 1 || leadForm.getEmail() == null) {
+            errors.add("email", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getPrice().trim().length() < 1 || leadForm.getPrice() == null) {
+            errors.add(FORM_PROPERTY_PRICE, new ActionMessage(ERROR_LABEL_MANDATORY));
+        } else {
+            try {
+                float priceValue = Float.parseFloat(leadForm.getPrice());
+                if (priceValue < 0) {
+                    errors.add(FORM_PROPERTY_PRICE, new ActionMessage("error.label.greaterThanZero"));
+                }
+            } catch (NumberFormatException numberFormatException) {
+                errors.add(FORM_PROPERTY_PRICE, new ActionMessage("error.label.numberOnly"));
+            }
+        }
+        if (!errors.isEmpty()) {
+            saveErrors(request, errors);
+            return mapping.findForward(FORWARD_EDIT_LEAD);
+        } else {
+            User user = (User) request.getSession().getAttribute("user");
+            Lead lead;
+            LeadService leadService = ServiceUtils.getLeadService();
+            Long leadId = leadForm.getLeadId();
+            if (leadId != null && leadId > 0) {
+                lead = leadService.getLead(leadId);
+                lead.setModifiedDate(new Date());
+
+                ActionMessages messages = new ActionMessages();
+                messages.add(ActionMessages.GLOBAL_MESSAGE,
+                        new ActionMessage("message.lead.update"));
+                saveMessages(request, messages);
+            } else {
+                lead = new LeadImpl();
+                lead.setStatus(Lead.Status.NEW.toString());
+                lead.setCreatedDate(new Date());
+
+                ActionMessages messages = new ActionMessages();
+                messages.add(ActionMessages.GLOBAL_MESSAGE,
+                        new ActionMessage("message.lead.insert"));
+                saveMessages(request, messages);
+            }
+            Long categoryId = Long.parseLong(leadForm.getCategory());
+            LOG.info("Category Id to find: {}", categoryId);
+            Category category = ServiceUtils.getCategoryService().getCategory(categoryId);
+            LOG.info("Category Id to obtained: {}", category.getId());
+            lead.setCategory(category);
+            lead.setTitle(leadForm.getTitle());
+            lead.setDescription(leadForm.getDescription());
+            lead.setFirstName(leadForm.getFirstName());
+            lead.setLastName(leadForm.getLastName());
+            lead.setEmail(leadForm.getEmail());
+            lead.setPhone(leadForm.getPhone());
+            lead.setPrice(Float.parseFloat(leadForm.getPrice()));
+            lead.setOwner(user);
+            lead = leadService.save(lead);
+            LOG.info("Saved lead: {}", lead);
+            return mapping.findForward("home");
+        }
     }
 }

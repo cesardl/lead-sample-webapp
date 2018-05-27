@@ -78,7 +78,12 @@ CREATE TABLE `LEAD` (
 
 LOCK TABLES `LEAD` WRITE;
 /*!40000 ALTER TABLE `LEAD` DISABLE KEYS */;
-INSERT INTO `LEAD` VALUES (1,'Mi first lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL);
+INSERT INTO `LEAD` VALUES
+  (1,'Mi first lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL),
+  (2,'Mi second lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL),
+  (3,'Mi third lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL),
+  (4,'Mi fourth lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL),
+  (5,'Mi fifth lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL);
 /*!40000 ALTER TABLE `LEAD` ENABLE KEYS */;
 UNLOCK TABLES;
 

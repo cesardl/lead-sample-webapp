@@ -39,9 +39,9 @@ public class LeadActionTest extends MockStrutsTestCase {
         assertEquals("Pablo Cesar", result.getFirstName());
         assertEquals("Diaz Lurita", result.getLastName());
         assertEquals("cesar.dl88@gmail.com", result.getEmail());
-        assertEquals("NEW", result.getStatus());
 
         verifyNoActionErrors();
+        verifyNoActionMessages();
     }
 
     public void testCreateAndSaveLead() {
@@ -65,6 +65,32 @@ public class LeadActionTest extends MockStrutsTestCase {
         verifyForward("home");
         verifyNoActionErrors();
         verifyActionMessages(new String[]{"message.lead.insert"});
+    }
+
+    public void testEditAndSaveLead() {
+        // Edit
+        LeadForm leadForm = mockLeadForm();
+        leadForm.setLeadId(1L);
+        leadForm.setAction("edit");
+
+        setRequestPathInfo("/lead");
+        setActionForm(leadForm);
+        actionPerform();
+
+        verifyForward("leadCreateEdit");
+        verifyNoActionErrors();
+        verifyNoActionMessages();
+
+        // save
+        leadForm.setAction("save");
+
+        setRequestPathInfo("/lead");
+        setActionForm(leadForm);
+        actionPerform();
+
+        verifyForward("home");
+        verifyNoActionErrors();
+        verifyActionMessages(new String[]{"message.lead.update"});
     }
 
     public void testEditAndPublishLead() {
