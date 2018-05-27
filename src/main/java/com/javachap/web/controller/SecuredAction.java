@@ -14,7 +14,6 @@ public abstract class SecuredAction extends Action {
     @Override
     public final ActionForward execute(ActionMapping mapping, ActionForm form,
                                        HttpServletRequest request, HttpServletResponse response) {
-
         ActionForward forward;
         Object user = request.getSession().getAttribute("user");
         LOG.info("Logged user: {}", user);

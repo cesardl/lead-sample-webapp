@@ -93,41 +93,9 @@ public class LeadAction extends SecuredAction {
     }
 
     private ActionForward saveLead(final ActionMapping mapping, final LeadForm leadForm, final HttpServletRequest request) {
-        ActionErrors errors = new ActionErrors();
-        if ("Select any Category".equals(leadForm.getCategory())) {
-            errors.add("category", new ActionMessage(ERROR_LABEL_MANDATORY));
-        }
-        if (leadForm.getTitle().trim().length() < 1 || leadForm.getTitle() == null) {
-            errors.add("title", new ActionMessage(ERROR_LABEL_MANDATORY));
-        }
-        if (leadForm.getDescription().trim().length() < 1 || leadForm.getDescription() == null) {
-            errors.add("description", new ActionMessage(ERROR_LABEL_MANDATORY));
-        }
-        if (leadForm.getFirstName().trim().length() < 1 || leadForm.getFirstName() == null) {
-            errors.add("firstName", new ActionMessage(ERROR_LABEL_MANDATORY));
-        }
-        if (leadForm.getLastName().trim().length() < 1 || leadForm.getLastName() == null) {
-            errors.add("lastName", new ActionMessage(ERROR_LABEL_MANDATORY));
-        }
-        if (leadForm.getEmail().trim().length() < 1 || leadForm.getEmail() == null) {
-            errors.add("email", new ActionMessage(ERROR_LABEL_MANDATORY));
-        }
-        if (leadForm.getPrice().trim().length() < 1 || leadForm.getPrice() == null) {
-            errors.add(FORM_PROPERTY_PRICE, new ActionMessage(ERROR_LABEL_MANDATORY));
-        } else {
-            try {
-                float priceValue = Float.parseFloat(leadForm.getPrice());
-                if (priceValue < 0) {
-                    errors.add(FORM_PROPERTY_PRICE, new ActionMessage("error.label.greaterThanZero"));
-                }
-            } catch (NumberFormatException numberFormatException) {
-                errors.add(FORM_PROPERTY_PRICE, new ActionMessage("error.label.numberOnly"));
-            }
-        }
-        if (!errors.isEmpty()) {
-            saveErrors(request, errors);
-            return mapping.findForward(FORWARD_EDIT_LEAD);
-        } else {
+        ActionErrors errors = validForm(leadForm);
+
+        if (errors.isEmpty()) {
             User user = (User) request.getSession().getAttribute("user");
             Lead lead;
             LeadService leadService = ServiceUtils.getLeadService();
@@ -166,6 +134,44 @@ public class LeadAction extends SecuredAction {
             lead = leadService.save(lead);
             LOG.info("Saved lead: {}", lead);
             return mapping.findForward("home");
+        } else {
+            saveErrors(request, errors);
+            return mapping.findForward(FORWARD_EDIT_LEAD);
         }
+    }
+
+    private ActionErrors validForm(final LeadForm leadForm) {
+        ActionErrors errors = new ActionErrors();
+        if ("Select any Category".equals(leadForm.getCategory())) {
+            errors.add("category", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getTitle().trim().length() < 1 || leadForm.getTitle() == null) {
+            errors.add("title", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getDescription().trim().length() < 1 || leadForm.getDescription() == null) {
+            errors.add("description", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getFirstName().trim().length() < 1 || leadForm.getFirstName() == null) {
+            errors.add("firstName", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getLastName().trim().length() < 1 || leadForm.getLastName() == null) {
+            errors.add("lastName", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getEmail().trim().length() < 1 || leadForm.getEmail() == null) {
+            errors.add("email", new ActionMessage(ERROR_LABEL_MANDATORY));
+        }
+        if (leadForm.getPrice().trim().length() < 1 || leadForm.getPrice() == null) {
+            errors.add(FORM_PROPERTY_PRICE, new ActionMessage(ERROR_LABEL_MANDATORY));
+        } else {
+            try {
+                float priceValue = Float.parseFloat(leadForm.getPrice());
+                if (priceValue < 0) {
+                    errors.add(FORM_PROPERTY_PRICE, new ActionMessage("error.label.greaterThanZero"));
+                }
+            } catch (NumberFormatException numberFormatException) {
+                errors.add(FORM_PROPERTY_PRICE, new ActionMessage("error.label.numberOnly"));
+            }
+        }
+        return errors;
     }
 }

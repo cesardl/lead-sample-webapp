@@ -21,6 +21,17 @@ public class LeadListingActionTest extends MockStrutsTestCase {
         getRequest().getSession().setAttribute("user", ServiceUtils.getUserService().getUser(2L));
     }
 
+    public void testUnLoggedUser() {
+        getRequest().getSession().setAttribute("user", null);
+
+        setRequestPathInfo("/leadListing");
+        setActionForm(new LeadListingForm());
+        actionPerform();
+
+        verifyActionErrors(new String[]{"error.label.authRequired"});
+        verifyForward("login");
+    }
+
     public void testDeleteSingleLead() {
         LeadListingForm leadListingForm = new LeadListingForm();
         leadListingForm.setLeadId(1L);
@@ -45,4 +56,15 @@ public class LeadListingActionTest extends MockStrutsTestCase {
         verifyInputForward();
     }
 
+    public void testFailedDeleteLead() {
+        LeadListingForm leadListingForm = new LeadListingForm();
+        leadListingForm.setLeadId(100L);
+        leadListingForm.setAction("delete");
+
+        setRequestPathInfo("/leadListing");
+        setActionForm(leadListingForm);
+        actionPerform();
+
+        verifyActionErrors(new String[]{"error.lead.deleted"});
+    }
 }

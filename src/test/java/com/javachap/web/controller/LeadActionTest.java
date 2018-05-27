@@ -24,6 +24,32 @@ public class LeadActionTest extends MockStrutsTestCase {
         getRequest().getSession().setAttribute("user", ServiceUtils.getUserService().getUser(1L));
     }
 
+    public void testTryingToCancel() {
+        LeadForm leadForm = new LeadForm();
+        leadForm.setAction("cancel");
+
+        setRequestPathInfo("/lead");
+        setActionForm(leadForm);
+        actionPerform();
+
+        verifyForward("home");
+        verifyNoActionErrors();
+        verifyNoActionMessages();
+    }
+
+    public void testTryingToDelete() {
+        LeadForm leadForm = new LeadForm();
+        leadForm.setAction("delete");
+
+        setRequestPathInfo("/lead");
+        setActionForm(leadForm);
+        actionPerform();
+
+        verifyForward("home");
+        verifyNoActionErrors();
+        verifyNoActionMessages();
+    }
+
     public void testGetLeadById() {
         LeadForm leadForm = new LeadForm();
         leadForm.setLeadId(1L);

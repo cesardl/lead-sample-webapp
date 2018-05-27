@@ -2,9 +2,6 @@ language: java
 sudo: false
 install: true
 
-services:
-  - mysql
-
 addons:
   apt:
     update: true

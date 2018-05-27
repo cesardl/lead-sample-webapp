@@ -16,18 +16,6 @@ public class LanguageActionTest extends MockStrutsTestCase {
         super(testName);
     }
 
-    public void testSettingEnglishLocale() {
-        setRequestPathInfo("/language");
-        setActionForm(new LanguageForm());
-        actionPerform();
-
-        verifyForward("home");
-
-        assertEquals(Locale.ENGLISH, getSession().getAttribute("display"));
-
-        verifyNoActionErrors();
-    }
-
     public void testSettingFrenchLocale() {
         LanguageForm languageForm = new LanguageForm();
         languageForm.setLanguage("french");
@@ -39,6 +27,33 @@ public class LanguageActionTest extends MockStrutsTestCase {
         verifyForward("home");
 
         assertEquals(Locale.FRENCH, getSession().getAttribute("display"));
+
+        verifyNoActionErrors();
+    }
+
+    public void testSettingSpanishLocale() {
+        LanguageForm languageForm = new LanguageForm();
+        languageForm.setLanguage("spanish");
+
+        setRequestPathInfo("/language");
+        setActionForm(languageForm);
+        actionPerform();
+
+        verifyForward("home");
+
+        assertEquals(new Locale("es", "ES"), getSession().getAttribute("display"));
+
+        verifyNoActionErrors();
+    }
+
+    public void testSettingEnglishLocale() {
+        setRequestPathInfo("/language");
+        setActionForm(new LanguageForm());
+        actionPerform();
+
+        verifyForward("home");
+
+        assertEquals(Locale.ENGLISH, getSession().getAttribute("display"));
 
         verifyNoActionErrors();
     }
