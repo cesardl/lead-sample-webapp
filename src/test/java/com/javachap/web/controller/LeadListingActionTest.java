@@ -34,7 +34,7 @@ public class LeadListingActionTest extends MockStrutsTestCase {
 
     public void testDeleteSingleLead() {
         LeadListingForm leadListingForm = new LeadListingForm();
-        leadListingForm.setLeadId(1L);
+        leadListingForm.setLeadId(101L);
         leadListingForm.setAction("delete");
 
         setRequestPathInfo("/leadListing");
@@ -46,7 +46,7 @@ public class LeadListingActionTest extends MockStrutsTestCase {
 
     public void testDeleteAllLeads() {
         LeadListingForm leadListingForm = new LeadListingForm();
-        leadListingForm.setLeadIds(new String[]{"2", "3", "4", "5"});
+        leadListingForm.setLeadIds(new String[]{"102", "103", "104", "105"});
         leadListingForm.setAction("deleteLeads");
 
         setRequestPathInfo("/leadListing");
@@ -58,7 +58,7 @@ public class LeadListingActionTest extends MockStrutsTestCase {
 
     public void testFailedDeleteLead() {
         LeadListingForm leadListingForm = new LeadListingForm();
-        leadListingForm.setLeadId(100L);
+        leadListingForm.setLeadId(1000L);
         leadListingForm.setAction("delete");
 
         setRequestPathInfo("/leadListing");

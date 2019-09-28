@@ -15,7 +15,7 @@
         <property column="LD_LAST_NAME" name="lastName" type="java.lang.String"/>
         <property column="LD_EMAIL" name="email" type="java.lang.String"/>
         <property column="LD_PHONE" name="phone" type="java.lang.String"/>
-        <property column="LD_PRICE" name="price" type="java.lang.Float"/>
+        <property column="LD_PRICE" name="price" type="java.math.BigDecimal"/>
         <property column="LD_STATUS" name="status" type="java.lang.String"/>
         <property column="LD_CREATED_DATE" name="createdDate" type="java.util.Date"/>
         <property column="LD_MODIFIED_DATE" name="modifiedDate" type="java.util.Date"/>

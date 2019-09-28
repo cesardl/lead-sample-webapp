@@ -33,7 +33,7 @@ public class UserServiceImpl extends ServiceImpl<User> implements UserService {
         return userServiceImpl;
     }
 
-    public User authenticate(String email, String password) {
+    public User authenticate(final String email, final String password) {
         User user;
         try {
             Session session = HibernateUtils.currentSession();
@@ -48,7 +48,7 @@ public class UserServiceImpl extends ServiceImpl<User> implements UserService {
         return user;
     }
 
-    public User getUser(Long userId) {
+    public User getUser(final Long userId) {
         User user;
         try {
             Session session = HibernateUtils.currentSession();

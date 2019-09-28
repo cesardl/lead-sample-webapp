@@ -1,5 +1,7 @@
 package com.javachap.domain;
 
+import java.math.BigDecimal;
+
 public interface Lead extends Domain {
 
     String getTitle();
@@ -26,9 +28,9 @@ public interface Lead extends Domain {
 
     void setPhone(String phone);
 
-    Float getPrice();
+    BigDecimal getPrice();
 
-    void setPrice(Float price);
+    void setPrice(BigDecimal price);
 
     Category getCategory();
 

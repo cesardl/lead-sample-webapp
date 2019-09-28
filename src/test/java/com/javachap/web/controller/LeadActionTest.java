@@ -1,11 +1,10 @@
 package com.javachap.web.controller;
 
+import com.javachap.Stubs;
 import com.javachap.domain.Lead;
 import com.javachap.service.ServiceUtils;
 import com.javachap.web.model.LeadForm;
 import servletunit.struts.MockStrutsTestCase;
-
-import java.util.UUID;
 
 /**
  * Created on 26/05/2018.
@@ -81,7 +80,7 @@ public class LeadActionTest extends MockStrutsTestCase {
         verifyNoActionMessages();
 
         // Save
-        LeadForm leadForm = mockLeadForm();
+        LeadForm leadForm = Stubs.leadForm();
         leadForm.setAction("save");
 
         setRequestPathInfo("/lead");
@@ -95,7 +94,7 @@ public class LeadActionTest extends MockStrutsTestCase {
 
     public void testEditAndSaveLead() {
         // Edit
-        LeadForm leadForm = mockLeadForm();
+        LeadForm leadForm = Stubs.leadForm();
         leadForm.setLeadId(1L);
         leadForm.setAction("edit");
 
@@ -121,8 +120,8 @@ public class LeadActionTest extends MockStrutsTestCase {
 
     public void testEditAndPublishLead() {
         // Edit
-        LeadForm leadForm = mockLeadForm();
-        leadForm.setLeadId(1L);
+        LeadForm leadForm = Stubs.leadForm();
+        leadForm.setLeadId(2L);
         leadForm.setAction("edit");
 
         setRequestPathInfo("/lead");
@@ -143,19 +142,5 @@ public class LeadActionTest extends MockStrutsTestCase {
         verifyForward("home");
         verifyNoActionErrors();
         verifyActionMessages(new String[]{"message.lead.publish"});
-    }
-
-    private LeadForm mockLeadForm() {
-        UUID uuid = UUID.randomUUID();
-        LeadForm leadForm = new LeadForm();
-        leadForm.setTitle(uuid.toString());
-        leadForm.setDescription("Test Description " + uuid);
-        leadForm.setFirstName("Test");
-        leadForm.setLastName("test");
-        leadForm.setEmail("test@javachap.com");
-        leadForm.setPhone("12333");
-        leadForm.setPrice("10.2");
-        leadForm.setCategory("1");
-        return leadForm;
     }
 }

@@ -31,7 +31,7 @@
                         <label for="email" class="desc">
                             <bean:message key="label.email" locale="display" />
                         </label>
-                        <div>
+                        <div id="email">
                             <html:text property="email" maxlength="255"
                                        tabindex="4" styleClass="field text medium"/>
                         </div>
@@ -41,7 +41,7 @@
                         <label for="password" class="desc">
                             <bean:message key="label.password" locale="display" />
                         </label>
-                        <div>
+                        <div id="password">
                             <html:password property="password" maxlength="255"
                                            tabindex="5" styleClass="field text medium"/>
                         </div>

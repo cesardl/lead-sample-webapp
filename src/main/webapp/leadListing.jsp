@@ -14,7 +14,7 @@
     </head>
 
     <body id="public">
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
             <!--
             function selectAll(deleteMain) {
                 var trCount = document.getElementsByTagName('tr').length;

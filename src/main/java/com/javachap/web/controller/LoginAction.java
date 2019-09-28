@@ -25,8 +25,7 @@ public class LoginAction extends Action {
 
             if (user == null) {
                 ActionErrors errors = new ActionErrors();
-                errors.add(ActionErrors.GLOBAL_MESSAGE,
-                        new ActionMessage("error.login.failed"));
+                errors.add(ActionErrors.GLOBAL_MESSAGE, new ActionMessage("error.login.failed"));
                 saveErrors(request, errors);
             } else {
                 request.getSession(true).setAttribute("user", user);

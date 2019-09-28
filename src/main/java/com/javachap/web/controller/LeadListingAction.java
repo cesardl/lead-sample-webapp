@@ -42,21 +42,19 @@ public class LeadListingAction extends SecuredAction {
     private void delete(final Long leadId, final HttpServletRequest request) {
         LeadService leadService = ServiceUtils.getLeadService();
         boolean deleteSuccessful = false;
-        if (leadId != null && leadId > 0) {
-            Lead lead = leadService.getLead(leadId);
-            if (lead != null) {
-                leadService.delete(lead);
-                ActionMessages messages = new ActionMessages();
-                messages.add(ActionMessages.GLOBAL_MESSAGE,
-                        new ActionMessage("message.lead.delete"));
-                saveMessages(request, messages);
-                deleteSuccessful = true;
-            }
+
+        Lead lead = leadService.getLead(leadId);
+        if (lead != null) {
+            leadService.delete(lead);
+            ActionMessages messages = new ActionMessages();
+            messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message.lead.delete"));
+            saveMessages(request, messages);
+            deleteSuccessful = true;
         }
+
         if (!deleteSuccessful) {
             ActionErrors errors = new ActionErrors();
-            errors.add(ActionErrors.GLOBAL_MESSAGE,
-                    new ActionMessage("error.lead.deleted"));
+            errors.add(ActionErrors.GLOBAL_MESSAGE, new ActionMessage("error.lead.deleted"));
             saveErrors(request, errors);
         }
     }

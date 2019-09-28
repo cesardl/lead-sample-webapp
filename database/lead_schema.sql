@@ -1,36 +1,39 @@
--- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.7.13, for Win32 (AMD64)
 --
 -- Host: localhost    Database: lead
 -- ------------------------------------------------------
--- Server version	5.1.41-3ubuntu12.6
+-- Server version	5.7.13-log
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION = @@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40103 SET @OLD_TIME_ZONE = @@TIME_ZONE */;
+/*!40103 SET TIME_ZONE = '+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0 */;
+/*!40101 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES = @@SQL_NOTES, SQL_NOTES = 0 */;
 
 --
 -- Table structure for table `CATEGORY`
 --
 
 DROP TABLE IF EXISTS `CATEGORY`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CATEGORY` (
-  `CT_ID` bigint(20) NOT NULL AUTO_INCREMENT,
-  `CT_NAME` varchar(255) NOT NULL,
-  `CT_DESCRIPTION` varchar(400) DEFAULT NULL,
-  `CT_CREATED_DATE` datetime DEFAULT NULL,
-  `CT_MODIFIED_DATE` datetime DEFAULT NULL,
-  PRIMARY KEY (`CT_ID`),
-  UNIQUE KEY `CT_NAME` (`CT_NAME`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+CREATE TABLE `CATEGORY`
+(
+    `CT_ID`            bigint(20)   NOT NULL AUTO_INCREMENT,
+    `CT_NAME`          varchar(255) NOT NULL,
+    `CT_DESCRIPTION`   varchar(400)          DEFAULT NULL,
+    `CT_CREATED_DATE`  datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `CT_MODIFIED_DATE` datetime              DEFAULT NULL,
+    PRIMARY KEY (`CT_ID`),
+    UNIQUE KEY `CT_NAME` (`CT_NAME`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 8
+  DEFAULT CHARSET = utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,9 +41,18 @@ CREATE TABLE `CATEGORY` (
 --
 
 LOCK TABLES `CATEGORY` WRITE;
-/*!40000 ALTER TABLE `CATEGORY` DISABLE KEYS */;
-INSERT INTO `CATEGORY` VALUES (1,'Insurance','Insurance',NULL,NULL),(2,'IT Services','IT Services',NULL,NULL),(3,'Software','Software',NULL,NULL),(4,'Hardware','Hardware',NULL,NULL),(5,'Financial Services','Financial Services',NULL,NULL),(6,'Construction','Construction',NULL,NULL),(7,'Consumer Loans','Consumer Loans',NULL,NULL);
-/*!40000 ALTER TABLE `CATEGORY` ENABLE KEYS */;
+/*!40000 ALTER TABLE `CATEGORY`
+    DISABLE KEYS */;
+INSERT INTO `CATEGORY`
+VALUES (1, 'Insurance', 'Insurance', DEFAULT, NULL),
+       (2, 'IT Services', 'IT Services', DEFAULT, NULL),
+       (3, 'Software', 'Software', DEFAULT, NULL),
+       (4, 'Hardware', 'Hardware', DEFAULT, NULL),
+       (5, 'Financial Services', 'Financial Services', DEFAULT, NULL),
+       (6, 'Construction', 'Construction', DEFAULT, NULL),
+       (7, 'Consumer Loans', 'Consumer Loans', DEFAULT, NULL);
+/*!40000 ALTER TABLE `CATEGORY`
+    ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -48,28 +60,31 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `LEAD`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `LEAD` (
-  `LD_ID` bigint(20) NOT NULL AUTO_INCREMENT,
-  `LD_TITLE` varchar(255) NOT NULL,
-  `LD_DESCRIPTION` varchar(400) NOT NULL,
-  `LD_FIRST_NAME` varchar(255) NOT NULL,
-  `LD_LAST_NAME` varchar(255) NOT NULL,
-  `LD_EMAIL` varchar(255) NOT NULL,
-  `LD_PHONE` varchar(100) DEFAULT NULL,
-  `LD_PRICE` decimal(19,2) DEFAULT NULL,
-  `LD_STATUS` varchar(100) NOT NULL,
-  `LD_OWNER_ID` bigint(20) NOT NULL,
-  `LD_CATEGORY_ID` bigint(20) NOT NULL,
-  `LD_CREATED_DATE` datetime DEFAULT NULL,
-  `LD_MODIFIED_DATE` datetime DEFAULT NULL,
-  PRIMARY KEY (`LD_ID`),
-  KEY `LD_OWNER_ID` (`LD_OWNER_ID`),
-  KEY `LD_CATEGORY_ID` (`LD_CATEGORY_ID`),
-  CONSTRAINT `LEAD_ibfk_1` FOREIGN KEY (`LD_OWNER_ID`) REFERENCES `USER` (`USR_ID`),
-  CONSTRAINT `LEAD_ibfk_2` FOREIGN KEY (`LD_CATEGORY_ID`) REFERENCES `CATEGORY` (`CT_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+CREATE TABLE `LEAD`
+(
+    `LD_ID`            bigint(20)   NOT NULL AUTO_INCREMENT,
+    `LD_TITLE`         varchar(255) NOT NULL,
+    `LD_DESCRIPTION`   varchar(400) NOT NULL,
+    `LD_FIRST_NAME`    varchar(255) NOT NULL,
+    `LD_LAST_NAME`     varchar(255) NOT NULL,
+    `LD_EMAIL`         varchar(255) NOT NULL,
+    `LD_PHONE`         varchar(100)          DEFAULT NULL,
+    `LD_PRICE`         decimal(19, 2)        DEFAULT NULL,
+    `LD_STATUS`        varchar(100) NOT NULL,
+    `LD_OWNER_ID`      bigint(20)   NOT NULL,
+    `LD_CATEGORY_ID`   bigint(20)   NOT NULL,
+    `LD_CREATED_DATE`  datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `LD_MODIFIED_DATE` datetime              DEFAULT NULL,
+    PRIMARY KEY (`LD_ID`),
+    KEY `LD_OWNER_ID` (`LD_OWNER_ID`),
+    KEY `LD_CATEGORY_ID` (`LD_CATEGORY_ID`),
+    CONSTRAINT `LEAD_ibfk_1` FOREIGN KEY (`LD_OWNER_ID`) REFERENCES `USER` (`USR_ID`),
+    CONSTRAINT `LEAD_ibfk_2` FOREIGN KEY (`LD_CATEGORY_ID`) REFERENCES `CATEGORY` (`CT_ID`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 267
+  DEFAULT CHARSET = utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,14 +92,543 @@ CREATE TABLE `LEAD` (
 --
 
 LOCK TABLES `LEAD` WRITE;
-/*!40000 ALTER TABLE `LEAD` DISABLE KEYS */;
-INSERT INTO `LEAD` VALUES
-  (1,'Mi first lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL),
-  (2,'Mi second lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL),
-  (3,'Mi third lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL),
-  (4,'Mi fourth lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL),
-  (5,'Mi fifth lead','--','Pablo Cesar','Diaz Lurita','cesar.dl88@gmail.com','959656','150.00','NEW',2,3,NULL,NULL);
-/*!40000 ALTER TABLE `LEAD` ENABLE KEYS */;
+/*!40000 ALTER TABLE `LEAD`
+    DISABLE KEYS */;
+INSERT INTO `LEAD`
+VALUES (1, 'Mi first lead', '--', 'Pablo Cesar', 'Diaz Lurita', 'cesar.dl88@gmail.com', '959656', 150.00, 'NEW', 2, 3,
+        DEFAULT, NULL),
+       (2, 'Mi second lead', '--', 'Pablo Cesar', 'Diaz Lurita', 'cesar.dl88@gmail.com', '959656', 150.00, 'NEW', 2, 3,
+        DEFAULT, NULL),
+       (3, 'Mi third lead', '--', 'Pablo Cesar', 'Diaz Lurita', 'cesar.dl88@gmail.com', '959656', 150.00, 'NEW', 2, 3,
+        DEFAULT, NULL),
+       (4, 'Mi fourth lead', '--', 'Pablo Cesar', 'Diaz Lurita', 'cesar.dl88@gmail.com', '959656', 150.00, 'NEW', 2, 3,
+        DEFAULT, NULL),
+       (5, 'Mi fifth lead', '--', 'Pablo Cesar', 'Diaz Lurita', 'cesar.dl88@gmail.com', '959656', 150.00, 'NEW', 2, 3,
+        DEFAULT, NULL),
+       (6, 'aa1a7a06-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jose Luis', 'Enriquez Lopez', 'correo@gmail.com', '123456789',
+        25119.31, 'NEW', 1, 7, DEFAULT, NULL),
+       (7, 'aa1aa378-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'FRANCESCOLY PAOLO', 'PEREZ TTITO',
+        'jimmy230889_23@hotmail.com', '994726128', 60990.55, 'NEW', 1, 2, DEFAULT, NULL),
+       (8, 'aa1aa541-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'eloy', 'baez', 'eebaez2@yahoo.es', '993905793', 85021.78,
+        'NEW', 1, 1, DEFAULT, NULL),
+       (9, 'aa1aa64a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Andres', 'Barrientos Garcia', 'bandres6@gmail.com',
+        '993669661', 22217.41, 'PUBLISHED', 2, 6, DEFAULT, NULL),
+       (10, 'aa1aa72e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'ruben', 'mendoza alca', 'rrmendozaa@hotmail.com',
+        '980728776', 33555.43, 'PUBLISHED', 1, 2, DEFAULT, NULL),
+       (11, 'aa1aa7e5-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'juan eduardo', 'yarasca carranza', 'juan10588@gmail.com',
+        '991974068', 9739.04, 'NEW', 1, 6, DEFAULT, NULL),
+       (12, 'aa1aa89b-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Joel', 'Montoya', 'joemm_89@hotmail.com', '991272463',
+        22247.19, 'NEW', 2, 5, DEFAULT, NULL),
+       (13, 'aa1aaa71-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'ALBERT JUAN', 'MONTES ANCCASI', 'albert_317ma@hotmail.com',
+        '997464968', 41731.45, 'NEW', 3, 4, DEFAULT, NULL),
+       (14, 'aa1aab1d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'bruno', 'palacios', 'bfpalacios@gmail.com', '968386383',
+        11730.20, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (15, 'aa1aabc3-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Daniel', 'Carpio Contreras', 'carpio.cc@gmail.com',
+        '988054492', 42957.07, 'PUBLISHED', 2, 2, DEFAULT, NULL),
+       (16, 'aa1aac6a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Christian', 'Ruiz Gonzales', 'zully_chris@hotmail.com',
+        '999102783', 84005.61, 'NEW', 3, 2, DEFAULT, NULL),
+       (17, 'aa1aad12-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Cesar David', 'Neira Huaman', 'csar_1603@hotmail.com',
+        '999999999', 34393.97, 'NEW', 1, 5, DEFAULT, NULL),
+       (18, 'aa1aadb3-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Milton Alonso', 'Tejada Tejada',
+        'mat_x100pre_10@hotmail.com', '986768257', 92467.21, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (19, 'aa1ab15c-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Zuly', 'Diaz Soto', 'zuli_227@hotmail.com', '991349490',
+        30371.09, 'NEW', 1, 2, DEFAULT, NULL),
+       (20, 'aa1ab22c-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Alberto', 'Vilca Ypanaque', 'jorge12745@hotmail.com',
+        '990300151', 27208.79, 'NEW', 3, 5, DEFAULT, NULL),
+       (21, 'aa1ab371-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Luis', 'Palomino Paniora', 'palomino.lucho@gmail.com',
+        '994813977', 72365.23, 'PUBLISHED', 2, 1, DEFAULT, NULL),
+       (22, 'aa1ab423-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Ronnier', 'Atayauri Calderon', 'bc.ronnie@hotmail.com',
+        '992751443', 17327.17, 'NEW', 1, 7, DEFAULT, NULL),
+       (23, 'aa1ab4cc-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Eduardo ', 'De Amat', 'emanueldeamat@gmail.com', '992458517',
+        81374.89, 'PUBLISHED', 2, 6, DEFAULT, NULL),
+       (24, 'aa1ab5f6-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Felipe Guillermo', 'Maguina Ramirez',
+        'fgmr_20_12@hotmail.com', '966515722', 8091.54, 'NEW', 3, 5, DEFAULT, NULL),
+       (25, 'aa1ab6a8-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jose Santos', 'Ventura Arteaga', 'ventura.jos3@gmail.com',
+        '992214257', 83733.38, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (26, 'aa1ab755-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Juan Pablo', 'Huachaca Vargas', 'juanpablo.magno@gmail.com',
+        '997204299', 65154.00, 'NEW', 2, 1, DEFAULT, NULL),
+       (27, 'aa1ab7f0-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jonathan', 'Medina Diaz', 'jonathanmd@hotmail.com',
+        '991685322', 65312.05, 'NEW', 1, 2, DEFAULT, NULL),
+       (28, 'aa1ab88f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jonathan', 'Medina Diaz', 'jonathanmd@hotmail.com',
+        '991685321', 24468.61, 'NEW', 3, 2, DEFAULT, NULL),
+       (29, 'aa1ab936-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Max Jairo', 'Collao Aldave', 'mcollaoa@sistemas.edu.pe',
+        '985072515', 2229.13, 'PUBLISHED', 2, 6, DEFAULT, NULL),
+       (30, 'aa1ab9d7-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Julio Hidalgo', 'Portella Hidalgo',
+        'julioportellah@gmail.com', '988437271', 82359.97, 'PUBLISHED', 1, 5, DEFAULT, NULL),
+       (31, 'aa1aba7b-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Manuel Jesus', 'Ramos Vargas', 'mjrv1.6180@gmail.com',
+        '993134986', 68930.84, 'PUBLISHED', 3, 6, DEFAULT, NULL),
+       (32, 'aa1abb24-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'David', 'Vilca Quispe', 'saul.vilca@spsa.com.pe',
+        '951292155', 72029.96, 'PUBLISHED', 1, 2, DEFAULT, NULL),
+       (33, 'aa1abbd1-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Franco', 'Mallqui Parra', 'franco_msm@hotmail.com',
+        '945643738', 22809.87, 'PUBLISHED', 2, 1, DEFAULT, NULL),
+       (34, 'aa1abc71-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'john jesus ', 'epiquin castillo', 'loco_666_87x@hotmail.com',
+        '990413192', 89118.18, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (35, 'aa1abd9a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'jhonny americo', 'Estrella Palomino',
+        'jhonny.estrella@infosec.pe', '982333441', 19963.73, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (36, 'aa1abec5-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Anthony ', 'Ramos', 'anthony_dg@hotmail.com', '998839170',
+        28723.73, 'PUBLISHED', 2, 5, DEFAULT, NULL),
+       (37, 'aa1abff0-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jose David', 'Esquicha Tejada', 'josedet@gmail.com',
+        '959143336', 34997.60, 'NEW', 2, 7, DEFAULT, NULL),
+       (38, 'aa1ac0a5-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Cesar', 'Miranda', 'cesar_g92@hotmail.com', '989071840',
+        77392.38, 'NEW', 2, 5, DEFAULT, NULL),
+       (39, 'aa1ac147-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Franklin Jerry', 'Medina Escalante', 'jerrym2@hotmail.com',
+        '2734807', 10758.68, 'NEW', 1, 3, DEFAULT, NULL),
+       (40, 'aa1ac1ee-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Hector Abel', 'Ramirez collado', 'RCHECTORA@episunsa.edu.pe',
+        '971365835', 21156.42, 'NEW', 2, 5, DEFAULT, NULL),
+       (41, 'aa1ac296-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Eduardo Agustin', 'Espinoza Chaparro',
+        'espinoza.eduardo.a@gmail.com', '998833782', 85001.78, 'NEW', 3, 4, DEFAULT, NULL),
+       (42, 'aa1ac33a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Erwin Jose', 'Espinoza Chaparro', 'erwin.espinoza@gmail.com',
+        '985456162', 41955.47, 'NEW', 3, 5, DEFAULT, NULL),
+       (43, 'aa1ac3e5-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'sony', 'rios cahuas', 'josep_17_8@hotmail.com', '995159387',
+        5395.85, 'NEW', 2, 4, DEFAULT, NULL),
+       (44, 'aa1ac48c-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jose Luis', 'Granda Visso', 'jgranda21@hotmail.com',
+        '995706903', 52107.52, 'PUBLISHED', 1, 5, DEFAULT, NULL),
+       (45, 'aa1ac56a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Carlos Alfredo', 'Finquin Pejerrey', 'fikpe@hotmail.com',
+        '996096375', 35728.70, 'NEW', 2, 1, DEFAULT, NULL),
+       (46, 'aa1ac616-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Yensi', 'Vega', 'yensi.vega@gmail.com', '981867161',
+        34054.84, 'NEW', 2, 5, DEFAULT, NULL),
+       (47, 'aa1ac6bc-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'EDWIN', 'CAPCHA CORONADO', 'wall_149@hotmail.com',
+        '997345722', 86612.66, 'PUBLISHED', 2, 6, DEFAULT, NULL),
+       (48, 'aa1ac76a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'EDWIN', 'CAPCHA CORONADO', 'wall_149@hotmail.com',
+        '997345723', 49708.41, 'PUBLISHED', 1, 5, DEFAULT, NULL),
+       (49, 'aa1ac811-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Richard', 'Mata Rosales', 'richard_matar@hotmail.com',
+        '5620842', 34197.76, 'PUBLISHED', 1, 7, DEFAULT, NULL),
+       (50, 'aa1ac8b9-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'DE LA CRUZ', 'PISFIL', 'copydp@gmail.com', '996146269',
+        3267.75, 'NEW', 2, 1, DEFAULT, NULL),
+       (51, 'aa1ac962-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'PEDRO SANTOS', 'DE LA CRUZ PISFIL', 'copydp@gmail.com',
+        '996146260', 50542.40, 'NEW', 2, 2, DEFAULT, NULL),
+       (52, 'aa1aca86-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Frank', 'Chavez Malpartida', 'dexter6v@hotmail.com',
+        '99255554', 71264.83, 'NEW', 1, 4, DEFAULT, NULL),
+       (53, 'aa1acb37-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'John Augusto', 'Vargas Pozo', 'johnvp@gmail.com',
+        '996920304', 49845.28, 'NEW', 3, 6, DEFAULT, NULL),
+       (54, 'aa1acbdb-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Giancarlo', 'Laredo Aguero', 'linc324@hotmail.com',
+        '988003956', 24332.41, 'NEW', 2, 5, DEFAULT, NULL),
+       (55, 'aa1acc7f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Marianela Justina', 'Perez Garcia', 'ok_m14@hotmail.com',
+        '942129599', 8331.00, 'NEW', 1, 6, DEFAULT, NULL),
+       (56, 'aa1acd24-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Luis Enrique', 'Benites Sanchez', 'luis_b47@hotmail.com',
+        '986567810', 86356.03, 'NEW', 2, 4, DEFAULT, NULL),
+       (57, 'aa1acdd4-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'alexis', 'rosas', 'alerocha@gmail.com', '989159654',
+        45334.70, 'PUBLISHED', 2, 2, DEFAULT, NULL),
+       (58, 'aa1ace7f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'John Orfelino', 'Ortiz Rodriguez', 'jhon_taison@hotmail.com',
+        '985701371', 54788.71, 'PUBLISHED', 3, 2, DEFAULT, NULL),
+       (59, 'aa1acf2b-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Victor', 'Muchica', 'vmuchica@gmail.com', '999470826',
+        20306.41, 'PUBLISHED', 2, 6, DEFAULT, NULL),
+       (60, 'aa1acfd7-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Luisa', 'Oscanoa Ojeda', 'asiul.kwj@gmail.com', '998080055',
+        26976.88, 'NEW', 1, 1, DEFAULT, NULL),
+       (61, 'aa1ad082-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'RICARDO LUIS', 'GONZALES CASTILLO',
+        'CIBER_PRINCE@HOTMAIL.COM', '980983505', 8067.06, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (62, 'aa1ad131-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'ALONSO RAFAEL', 'MARTINEZ ACHULLA', 'xavi_man09@hotmail.com',
+        '986863177', 81618.94, 'PUBLISHED', 2, 6, DEFAULT, NULL),
+       (63, 'aa1ad1eb-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Cebastiana N', 'Salazar Jachilla', 'cnsj@hotmail.com',
+        '943031277', 41877.20, 'PUBLISHED', 2, 1, DEFAULT, NULL),
+       (64, 'aa1ad2a1-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Crist', 'Palli Apaza', 'cristlm@hotmail.com', '950321291',
+        52563.78, 'NEW', 2, 6, DEFAULT, NULL),
+       (65, 'aa1ad35b-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Neyder', 'Achahuanco Apaza', 'yo@neyder.net', '951378965',
+        37209.40, 'NEW', 2, 4, DEFAULT, NULL),
+       (66, 'aa1ad403-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Johnny Williams', 'Camones Tapia',
+        'redesysoporte@hotmail.com', '986287084', 4981.28, 'NEW', 2, 7, DEFAULT, NULL),
+       (67, 'aa1ad4ad-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Isbella Merici', 'Miranda Vasquez', 'isbella156@hotmail.com',
+        '991365232', 94344.76, 'PUBLISHED', 1, 2, DEFAULT, NULL),
+       (68, 'aa1ad55e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Williams Javier', 'Manrique Salazar', 'wmanriques@gmail.com',
+        '990440922', 56828.12, 'NEW', 2, 6, DEFAULT, NULL),
+       (69, 'aa1ad625-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Evelyn Roxana', 'Poma Nicho', 'nz.pm@hotmail.com',
+        '990330151', 49977.68, 'NEW', 3, 5, DEFAULT, NULL),
+       (70, 'aa1ad7fe-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'SANTOS JESUS', 'ESQUIVEL MURGA', 'jerry088@hotmail.com',
+        '997680085', 39132.78, 'PUBLISHED', 3, 6, DEFAULT, NULL),
+       (71, 'aa1ad8c3-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Luis Miguel', 'Caballero Gonzalez Cueva',
+        'lcaballero@hotmail.com', '979724202', 74185.47, 'NEW', 2, 6, DEFAULT, NULL),
+       (72, 'aa1ad989-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Marco', 'Montoro', 'surfer.adventure@gmail.com', '993967603',
+        75821.66, 'NEW', 2, 5, DEFAULT, NULL),
+       (73, 'aa1ada56-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Luis Alejandro', 'Zumaeta Rivera', 'lzumaetar@hotmail.com',
+        '986136403', 97744.43, 'PUBLISHED', 3, 7, DEFAULT, NULL),
+       (74, 'aa1adb20-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Daniel Eduardo', 'Barrios Lambruschini',
+        'daniel33800@hotmail.com', '999149956', 84799.49, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (75, 'aa1adbe1-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Arturo Carlos Alberto', 'Castaneda Melchor',
+        'atiz_245@hotmail.com', '996384713', 68878.27, 'NEW', 2, 4, DEFAULT, NULL),
+       (76, 'aa1adc9d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Eduardo Miguel', 'Florian Arteaga', 'eduflorian@cidsoli.org',
+        '980772318', 56395.72, 'NEW', 1, 5, DEFAULT, NULL),
+       (77, 'aa1add53-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Fabian ', 'Chuquitaype Zuniga', 'jfabiancz@gmail.com',
+        '959638224', 64467.10, 'PUBLISHED', 2, 5, DEFAULT, NULL),
+       (78, 'aa1ade17-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'eduardo renzo', 'florian flores',
+        'renzo_florian@hotmail.com', '986101565', 44077.18, 'PUBLISHED', 2, 2, DEFAULT, NULL),
+       (79, 'aa1aded6-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Raul Pablo Cesar', 'Cuentas Barbaran', 'raulcb1@hotmail.com',
+        '979727361', 96475.29, 'NEW', 2, 3, DEFAULT, NULL),
+       (80, 'aa1adf91-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Cristhian Efrain', 'Ccallo Quispe', 'c_ccallo1@hotmail.com',
+        '991248043', 20808.36, 'NEW', 3, 2, DEFAULT, NULL),
+       (81, 'aa1ae041-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Miguel Armando', 'Tito Ascue', 'migueltitoascue@gmail.com',
+        '984711887', 22501.55, 'PUBLISHED', 3, 3, DEFAULT, NULL),
+       (82, 'aa1ae0ef-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Maria Elena', 'Chavez Barces', 'chavezbarces@yahoo.es',
+        '997514308', 32355.50, 'NEW', 3, 2, DEFAULT, NULL),
+       (83, 'aa1ae216-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'jose carlos', 'gomero montalvan', 'josegm13@hotmail.com',
+        '996814008', 75143.42, 'NEW', 1, 1, DEFAULT, NULL),
+       (84, 'aa1ae2ba-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Hohammed', 'Estrada Vargas', 'hohammed@gmail.com',
+        '963906041', 53369.26, 'PUBLISHED', 3, 7, DEFAULT, NULL),
+       (85, 'aa1ae36d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Felix', 'Tito Mitma', 'jorgeftm.02@gmail.com',
+        '992952325', 18901.39, 'NEW', 1, 5, DEFAULT, NULL),
+       (86, 'aa1ae414-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'SONIA VERONICA ', 'CHAVEZ VIZA', 'sverochavez@gmail.com',
+        '951148615', 60027.71, 'NEW', 1, 1, DEFAULT, NULL),
+       (87, 'aa1ae542-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Felix', 'Tito Mitma', 'jorgeftm.02@gmail.com',
+        '992952320', 58422.72, 'PUBLISHED', 2, 5, DEFAULT, NULL),
+       (88, 'aa1ae676-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'freddy', 'Quispe Paquispe', 'freddy_26_4@hotmail.com',
+        '954152058', 76639.72, 'NEW', 2, 6, DEFAULT, NULL),
+       (89, 'aa1ae727-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Yen', 'Gonzalez Mayta', 'ygm13@hotmail.com', '954171206',
+        55139.03, 'NEW', 2, 5, DEFAULT, NULL),
+       (90, 'aa1ae7d3-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jose Luis', 'Almonacid aquino', 'jlaa030201@yahoo.es',
+        '999093449', 4735.57, 'NEW', 3, 5, DEFAULT, NULL),
+       (91, 'aa1ae883-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Juan Luis ', 'Diaz Aylas', 'athoq58265847@gmail.com',
+        '985477128', 57751.22, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (92, 'aa1ae928-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Ruben', 'Garcia Ucharima', 'rgarciau@sistemas.edu.pe',
+        '988632109', 25021.47, 'PUBLISHED', 2, 5, DEFAULT, NULL),
+       (93, 'aa1ae9da-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Kerry Thomas', 'Perez Huanca', 'k4torce@gmail.com',
+        '951295251', 4295.02, 'NEW', 3, 4, DEFAULT, NULL),
+       (94, 'aa1aea84-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Marizell', 'Ccopa Mamani', 'marizell15@gmail.com',
+        '951936870', 46187.14, 'PUBLISHED', 3, 2, DEFAULT, NULL),
+       (95, 'aa1aeb36-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Mario Junior', 'Inga Cahuana', 'mario21ic@gmail.com',
+        '971122317', 94184.87, 'PUBLISHED', 1, 6, DEFAULT, NULL),
+       (96, 'aa1aec14-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Juan Alfredo', 'MIGUEL Hilario', 'hmaj@hotmail.com',
+        '966742678', 64278.30, 'NEW', 1, 2, DEFAULT, NULL),
+       (97, 'aa1af1f6-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge', 'Mandujano', 'jorge.mandujano@myt.com.pe',
+        '988610758', 18366.42, 'NEW', 2, 4, DEFAULT, NULL),
+       (98, 'aa1af328-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'katia jimena', 'oscanoa ojeda', 'koscanoaojeda@hotmail.com',
+        '986364960', 92889.09, 'PUBLISHED', 1, 5, DEFAULT, NULL),
+       (99, 'aa1af3dd-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Danilo', 'BE', 'dk0de@bigfoot.com', '975204015', 73319.37,
+        'PUBLISHED', 3, 2, DEFAULT, NULL),
+       (100, 'aa1af496-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'david', 'fernandez', 'david.fernandez@bitsolutions.com',
+        '968663040', 24444.35, 'NEW', 1, 6, DEFAULT, NULL),
+       (101, 'aa1af552-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Daniel ', 'Serrano Zavala', 'dan_7_89@hotmail.com',
+        '994485795', 45305.10, 'PUBLISHED', 3, 2, DEFAULT, NULL),
+       (102, 'aa1af603-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Oscar Percy', 'Susanibar Cruz', 'oscar_3011@hotmail.com',
+        '988967992', 59530.49, 'NEW', 2, 4, DEFAULT, NULL),
+       (103, 'aa1af6bb-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'vladimir', 'caballa torres', 'vcaballat@gmail.com',
+        '945721879', 49151.07, 'NEW', 2, 2, DEFAULT, NULL),
+       (104, 'aa1af76f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Carlos', 'Rojas', 'netizen.peru+limahackunmsm@gmail.com',
+        '1', 36708.08, 'PUBLISHED', 3, 2, DEFAULT, NULL),
+       (105, 'aa1afd97-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Yesenia Fiorella', 'Penaranda Cordero',
+        'yesi_2831@hotmail.com', '986921932', 9459.88, 'NEW', 2, 2, DEFAULT, NULL),
+       (106, 'aa1aff60-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Juan Mijail', 'Benites Vivar', 'mijail2108@gmail.com',
+        '989046744', 71127.46, 'NEW', 1, 6, DEFAULT, NULL),
+       (107, 'aa1b0055-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'jorge luis', 'delgado portorraro',
+        'jorge03luis@hotmail.com', '994634711', 30444.52, 'PUBLISHED', 3, 3, DEFAULT, NULL),
+       (108, 'aa1b0136-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Humberto Martin', 'Gibaja Ravello',
+        'hmgibaja@infonegocio.net.pe', '997895473', 80932.09, 'NEW', 2, 3, DEFAULT, NULL),
+       (109, 'aa1b034b-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Luis', 'Giraldez  Cardenas', 'neolider@gmail.com',
+        '992535937', 93691.77, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (110, 'aa1b0420-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Gerardo Manuel', 'Guzman Reyes', 'sendanggel@gmail.com',
+        '986829751', 80773.98, 'NEW', 3, 3, DEFAULT, NULL),
+       (111, 'aa1b04e5-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Roberto Francisco', 'Contreras Diestra',
+        'gali03@hotmail.com', '987203025', 16380.86, 'NEW', 2, 5, DEFAULT, NULL),
+       (112, 'aa1b059e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Manuel Augusto', 'Lara Lopez', 'samael58@gmail.com',
+        '994055138', 75671.23, 'NEW', 2, 1, DEFAULT, NULL),
+       (113, 'aa1b0657-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Eduardo Karol', 'Corzo Martinez', 'ekcm07@gmail.com',
+        '993448376', 28370.04, 'PUBLISHED', 2, 6, DEFAULT, NULL),
+       (114, 'aa1b070f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Felix', 'Tito Mitma', 'jorgeftm.02@gmail.com',
+        '992952326', 1330.61, 'NEW', 2, 3, DEFAULT, NULL),
+       (115, 'aa1b0875-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Carlos', 'Luis', 'cluis@pucp.edu.pe', '993587440', 58145.37,
+        'PUBLISHED', 1, 3, DEFAULT, NULL),
+       (116, 'aa1b098e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Geancarlo Fernando', 'Quispe Rojas', 'geanqr@gmail.com',
+        '986629555', 36019.79, 'PUBLISHED', 1, 2, DEFAULT, NULL),
+       (117, 'aa1b0e13-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Luis', 'Quiroz Guevara', 'jqg201150@hotmail.com',
+        '981355492', 44828.51, 'NEW', 1, 3, DEFAULT, NULL),
+       (118, 'aa1b0fc0-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Leoncio ', 'Tirado salazar', 'lvts1984@hotmail.com',
+        '999586262', 58440.70, 'NEW', 2, 4, DEFAULT, NULL),
+       (119, 'aa1b1097-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Edwin Enrique ', 'Flores Bautista', 'eflores@ich.edu.pe',
+        '989300335', 13955.35, 'NEW', 3, 5, DEFAULT, NULL),
+       (120, 'aa1b1425-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Zaida Nieves', 'Cuadros Falcon',
+        'zcuadros@intercorp.com.pe', '993579206', 52726.73, 'PUBLISHED', 3, 7, DEFAULT, NULL),
+       (121, 'aa1b15e3-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Carlos', 'Luis', 'cluis@pucp.edu.pe', '993587441', 54794.48,
+        'NEW', 2, 5, DEFAULT, NULL),
+       (122, 'aa1b16d8-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Roxana Jessica ', 'Chipana Choque',
+        'roxana_111_1@hotmail.com', '945446681', 23525.57, 'NEW', 2, 6, DEFAULT, NULL),
+       (123, 'aa1b17ad-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Mario Julian', 'Chilo Quiroz', 'mariochilo@hotmail.com',
+        '999463372', 30694.87, 'PUBLISHED', 3, 7, DEFAULT, NULL),
+       (124, 'aa1b187c-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'RAFAEL', 'QUISPE', 'rrqm@hotmail.com', '984895907',
+        22595.85, 'PUBLISHED', 1, 3, DEFAULT, NULL),
+       (125, 'aa1b1942-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jazminne Jhoanna', 'Gridilla Velazco',
+        'jazyjc87@hotmail.com', '996913290', 63885.27, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (126, 'aa1b1a07-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Christopher', 'Cesti Castro', 'ccestic@sistemas.edu.pe',
+        '975157567', 82321.83, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (127, 'aa1b1b49-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Diego Enrique', 'Juarez Vargas', 'djuarez7@hotmail.com',
+        '980897957', 61652.54, 'NEW', 3, 4, DEFAULT, NULL),
+       (128, 'aa1b1c03-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'jose carlos ', ' gamarra', 'darkalonex@hotmail.com',
+        '975169638', 78635.16, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (129, 'aa1b2a02-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Roger Mitchel', 'Ungaro Casanova',
+        'mitchelungaro@hotmail.com', '975405291', 77962.43, 'NEW', 2, 2, DEFAULT, NULL),
+       (130, 'aa1b2ca0-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'John Bruno', 'Minano Silva', 'jminano@perupio-usa.org',
+        '993924860', 71607.19, 'NEW', 3, 3, DEFAULT, NULL),
+       (131, 'aa1b2dbf-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Hugo Ivan', 'Villegas Valenzuela', 'hugoivan@gmail.com',
+        '987542210', 46230.54, 'PUBLISHED', 2, 7, DEFAULT, NULL),
+       (132, 'aa1b2ed8-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'HUGO IVAN', 'VILLEGAS VALENZUELA', 'hugoivan@gmail.com',
+        '987542211', 56734.08, 'PUBLISHED', 1, 6, DEFAULT, NULL),
+       (133, 'aa1b3085-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jose Carlos', 'Minano Contreras',
+        'joseph_20144@hotmail.com', '986614293', 15011.82, 'NEW', 1, 5, DEFAULT, NULL),
+       (134, 'aa1b3178-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jhonny Sandro', 'Toledo Vera', 'sajotove@hotmail.com',
+        '970053334', 53339.66, 'PUBLISHED', 2, 1, DEFAULT, NULL),
+       (135, 'aa1b3245-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'John Bruno', 'Minano Silva', 'jbmssport@hotmail.com',
+        '993924861', 79455.80, 'PUBLISHED', 1, 6, DEFAULT, NULL),
+       (136, 'aa1b32e9-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'robinson', 'quispe mendez', 'relaxed_child@hotmail.com',
+        '980969448', 32795.89, 'NEW', 2, 6, DEFAULT, NULL),
+       (137, 'aa1b3381-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'JOEL', 'PAUCARIMA FRANCO', 'jopau007@hotmail.com',
+        '962868496', 12857.17, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (138, 'aa1b3417-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'ALEX DICK', 'COCHACHIN COCHACHIN', 'alex23_755@hotmail.com',
+        '943907352', 53297.75, 'PUBLISHED', 2, 7, DEFAULT, NULL),
+       (139, 'aa1b388b-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'EDWARD ROGER', 'VILCA TUMBILLO', 'EVT666@HOTMAIL.COM',
+        '989442678', 39610.51, 'NEW', 1, 6, DEFAULT, NULL),
+       (140, 'aa1b3985-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Luis Alberto', 'Arellano Villajulca',
+        'larellano@aloe.ulima.edu.pe', '989821806', 69118.69, 'PUBLISHED', 3, 7, DEFAULT, NULL),
+       (141, 'aa1b3a51-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'edwin', 'rojas', 'edwinrojas33@hotmail.com', '9977021548',
+        99201.93, 'NEW', 3, 2, DEFAULT, NULL),
+       (142, 'aa1b3afa-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'RONMEL HECTOR', 'HURTADO', 'viperdelta@gmail.com',
+        '984139942', 27673.19, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (143, 'aa1d3117-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Otoniel Felipe ', 'Coronel Pedreros', 'xkalelx@hotmail.com',
+        '991173480', 56301.29, 'NEW', 2, 3, DEFAULT, NULL),
+       (144, 'aa1d33b3-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Luis', 'Castaneda Cano', 'jorgeluis186@hotmail.com',
+        '995541977', 69724.02, 'NEW', 2, 4, DEFAULT, NULL),
+       (145, 'aa1d3485-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Felix', 'Tito Mitma', 'jorgeftm.02@gmail.com',
+        '992952327', 54868.18, 'NEW', 2, 6, DEFAULT, NULL),
+       (146, 'aa1d3535-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'David', 'Puchoc Lara', 'david_pro2002@hotmail.com',
+        '964279691', 72011.63, 'PUBLISHED', 1, 5, DEFAULT, NULL),
+       (147, 'aa1d363d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'KARINA MIRELLA', 'ESPINOZA LEON',
+        'karinaespinozal@hotmail.com', '985519381', 55608.46, 'NEW', 2, 6, DEFAULT, NULL),
+       (148, 'aa1d36e7-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'william', 'luque', 'speedy2006_2@hotmail.com', '995884925',
+        40629.75, 'PUBLISHED', 1, 4, DEFAULT, NULL),
+       (149, 'aa1d377e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Alcides Nicolas', 'Coronel Chempen',
+        'coronel.nicolas@gmail.com', '979757329', 31554.30, 'PUBLISHED', 2, 5, DEFAULT, NULL),
+       (150, 'aa1d381e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Miguel Angel', 'Luyo Pineda', 'the_killer_hl@msn.com',
+        '988923225', 31929.89, 'PUBLISHED', 1, 3, DEFAULT, NULL),
+       (151, 'aa1d38b6-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'carlos junior ', 'caso casimiro',
+        'carlosjcasoc@hotmail.com', '991573900', 95877.84, 'PUBLISHED', 3, 7, DEFAULT, NULL),
+       (152, 'aa1d394c-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Lucero Trilce', 'Vivas Bautista', 'trilce_135@hotmail.com',
+        '123456', 99821.28, 'PUBLISHED', 1, 2, DEFAULT, NULL),
+       (153, 'aa1d39e1-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Anthony Jonathan Ivan', 'Hernandez Zegarra',
+        'entteos@hotmail.com', '994082827', 72596.75, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (154, 'aa1d3a76-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'paul ', 'vilca aguilar', 'paul.webmaster@gmail.com',
+        '958800711', 15068.07, 'NEW', 2, 3, DEFAULT, NULL),
+       (155, 'aa1d3b09-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'aleco', 'portu', 'aa@aa.com', '958734563', 87744.81, 'NEW',
+        3, 2, DEFAULT, NULL),
+       (156, 'aa1d3b9f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'vladimir', 'Garcia Leandro', 'vladi_2402@hotmail.com',
+        '966612196', 75984.70, 'NEW', 2, 5, DEFAULT, NULL),
+       (157, 'aa1d3cbf-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Cesar', 'Neira', 'foo@foo', '999999998', 55350.10,
+        'PUBLISHED', 2, 2, DEFAULT, NULL),
+       (158, 'aa1d3d57-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'jose maria', 'vegas castillo', 'josvec_83@hotmail.com',
+        '987547108', 30192.66, 'NEW', 1, 2, DEFAULT, NULL),
+       (159, 'aa1d3dea-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Franco', 'Bringas Gonzalez', 'francobringas@gmail.com',
+        '981049667', 72522.63, 'PUBLISHED', 1, 2, DEFAULT, NULL),
+       (160, 'aa1d3e7c-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Walter Antonio', 'Rafael Palomino', 'wrafaelp@gmail.com',
+        '990150863', 29618.65, 'PUBLISHED', 3, 3, DEFAULT, NULL),
+       (161, 'aa1d3f0d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Cesar', 'Orosco Pacora', 'cesarorosco@gmail.com',
+        '995789200', 84645.01, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (162, 'aa1d3fa1-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Abigail Areli', 'Pena Espinoza', 'alanis_mabi@hotmail.com',
+        '956000515', 34132.44, 'NEW', 2, 2, DEFAULT, NULL),
+       (163, 'aa1d4032-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'David Adrian ', 'Placido Astupina',
+        'juandavid_secret14@hotmail.com', '992383190', 50970.71, 'NEW', 1, 4, DEFAULT, NULL),
+       (164, 'aa1d40bf-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Sergio Ernesto', 'Azahuanche Gutierrez',
+        'sergio11584@gmail.com', '993529625', 18113.39, 'PUBLISHED', 1, 6, DEFAULT, NULL),
+       (165, 'aa1d4154-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Julio Cesar', 'Lopez Ayvar', 'kyo1425@hotmail.com',
+        '980022300', 84025.47, 'PUBLISHED', 2, 5, DEFAULT, NULL),
+       (166, 'aa1d41eb-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Estuardo', 'Romero', 'erb97@hotmail.com', '995017091',
+        53565.29, 'NEW', 3, 4, DEFAULT, NULL),
+       (167, 'aa1d427e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Gabriela', 'Valdivia Dextre', 'gabriela9100@hotmail.com',
+        '986078329', 66684.57, 'PUBLISHED', 3, 5, DEFAULT, NULL),
+       (168, 'aa1d430d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'javier', 'solis flores', 'solis.unmsm@gmail.com',
+        '999430342', 33945.86, 'NEW', 2, 5, DEFAULT, NULL),
+       (169, 'aa1d439d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Alexis', 'Roque Cueva', 'alexrqperu@gmail.com', '985306532',
+        41782.63, 'NEW', 3, 4, DEFAULT, NULL),
+       (170, 'aa1d442d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jose Carlos', 'Pariona Arangoitia',
+        'carlos_pa15@hotmail.com', '985447656', 81682.38, 'PUBLISHED', 1, 7, DEFAULT, NULL),
+       (171, 'aa1d44c1-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'JOSE RAUL', 'SHICSHI LUNA', 'joseshicshe@aol.com',
+        '954102417', 32647.78, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (172, 'aa1d4556-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'CRISTHIAN GENARO', 'CUEVA PAREJAS', 'lev.leo@hotmail.com',
+        '964665092', 81700.05, 'PUBLISHED', 3, 3, DEFAULT, NULL),
+       (173, 'aa1d45e5-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Hernan Ysidro', 'Poma Quiroz', 'hernancza@gmail.com',
+        '945673511', 78638.64, 'NEW', 3, 1, DEFAULT, NULL),
+       (174, 'aa1d4678-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Juan Jose', 'VILLENA AVILA', 'jvillena@gmail.com',
+        '997474220', 55293.54, 'PUBLISHED', 1, 2, DEFAULT, NULL),
+       (175, 'aa1d4705-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Franre', 'Silvera Ortiz', 'fran_re@hotmail.com',
+        '993811164', 95819.24, 'PUBLISHED', 1, 3, DEFAULT, NULL),
+       (176, 'aa1d4796-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'miguel alfonso', 'morales rojo', 'mmoralesrojo@hotmail.com',
+        '997909941', 87246.23, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (177, 'aa1d4829-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'pablo miguel', 'sullca perez', 'p.sullca.perez@gmail.com',
+        '994940594', 64057.82, 'NEW', 2, 5, DEFAULT, NULL),
+       (178, 'aa1d48be-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'hugo kenyo', 'arbieto torres', 'hkat_14@hotmail.com',
+        '992423878', 4777.04, 'PUBLISHED', 3, 6, DEFAULT, NULL),
+       (179, 'aa1d4952-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Juan Gustavo', 'Giraldo', 'jgg0325@gmail.com', '992489469',
+        49545.22, 'PUBLISHED', 1, 6, DEFAULT, NULL),
+       (180, 'aa1d49e3-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'MIRKO', 'LLANTO', 'mirkollanto@hotmail.com', '988563450',
+        6977.55, 'NEW', 3, 4, DEFAULT, NULL),
+       (181, 'aa1d4a72-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'JESUS ANTONIO', 'PACAHUALA ARROYO', 'jesus.pa@peruit.com',
+        '986108223', 79857.75, 'PUBLISHED', 1, 5, DEFAULT, NULL),
+       (182, 'aa1d4b06-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'CARLOS GUILLERMO', 'TELLO VILLENA', 'C_TELLO85@HOTMAIL.COM',
+        '991554240', 26035.41, 'NEW', 3, 4, DEFAULT, NULL),
+       (183, 'aa1d4b94-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'VIRGINIA MARGARITA', 'SOTELO POMA', 'virgi.ves@gmail.com',
+        '988184910', 61430.05, 'NEW', 2, 4, DEFAULT, NULL),
+       (184, 'aa1d4c27-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'kield', 'Benites  Quispe', 'kield_711@hotmail.com',
+        '991317321', 61568.73, 'PUBLISHED', 1, 3, DEFAULT, NULL),
+       (185, 'aa1d4cb7-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Felix', 'Tito Mitma', 'jorgeftm.02@gmail.com',
+        '992952328', 42139.80, 'NEW', 3, 5, DEFAULT, NULL),
+       (186, 'aa1d4d4b-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Daniel Jesus', 'Sobrevilla Tarazona',
+        'danny2508@hotmail.com', '986222720', 66718.64, 'NEW', 3, 3, DEFAULT, NULL),
+       (187, 'aa1d4ddb-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Ricardo ', 'Lam Odicio', 'is.rlam@gmail.com', '975191810',
+        71104.16, 'PUBLISHED', 3, 6, DEFAULT, NULL),
+       (188, 'aa1d4e75-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Hadassa Jhussara', 'Cruz Yarleque',
+        'jhussaracruz@gmail.com', '998048698', 84446.53, 'PUBLISHED', 2, 6, DEFAULT, NULL),
+       (189, 'aa1d4f0b-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'JUAN CARLOS', 'RIOS VARAS',
+        'JUAN_CARLOSRIOS420@HOTMAIL.COM', '990136184', 5695.69, 'NEW', 2, 5, DEFAULT, NULL),
+       (190, 'aa1d4f9e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Robert Marlon', 'More Inga', 'robert_more1809@hotmail.com',
+        '992412298', 13142.26, 'NEW', 3, 4, DEFAULT, NULL),
+       (191, 'aa1d502e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'EDWIN OMAR', 'RODRIGUEZ CRUZ', 'OMAR1121@HOTMAIL.COM',
+        '986805721', 46225.96, 'PUBLISHED', 2, 2, DEFAULT, NULL),
+       (192, 'aa1d50c3-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Luis', 'Morales Loayza', 'yeshuahamashiajg@gmail.com',
+        '988715633', 90868.06, 'PUBLISHED', 1, 3, DEFAULT, NULL),
+       (193, 'aa1d5155-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Rosa Graciela', 'Chavez Cordero', 'rous1530@hotmail.com',
+        '997194722', 23456.69, 'PUBLISHED', 1, 4, DEFAULT, NULL),
+       (194, 'aa1d51e8-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'omar', 'mendoza ciprian', 'omarxtreme_flip180@hotmail.com',
+        '992586524', 85077.15, 'NEW', 3, 3, DEFAULT, NULL),
+       (195, 'aa1d5280-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'LUIS ALBERTO', 'RUIZ ASTO', 'luisbeto89@hotmail.com',
+        '949756615', 81480.94, 'PUBLISHED', 1, 7, DEFAULT, NULL),
+       (196, 'aa1d5318-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Freddy ', 'Castellanos Santa Cruz', 's_aramago@hotmail.com',
+        '997483862', 56662.40, 'NEW', 2, 3, DEFAULT, NULL),
+       (197, 'aa1d53a8-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Anthony', 'Pisco Vasquez', 'anthonypisco@hotmail.com',
+        '941826974', 35113.40, 'NEW', 1, 2, DEFAULT, NULL),
+       (198, 'aa1d543c-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Fidel', 'Malca Perez', 'fidelfisi@gmail.com', '989897658',
+        54056.16, 'NEW', 2, 4, DEFAULT, NULL),
+       (199, 'aa1d54ce-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'luis alfonso', 'alfaro mendoza',
+        'luiscrema_1988@hotmail.com', '991174699', 96973.99, 'NEW', 2, 2, DEFAULT, NULL),
+       (200, 'aa1d555f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Andy Ludwing', 'De La Cruz More', 'andy_aedo@hotmail.com',
+        '992328517', 83558.09, 'PUBLISHED', 2, 5, DEFAULT, NULL),
+       (201, 'aa1d55f4-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'jhon michael', 'huerta vergaray', 'jhonhuertav@gmail.com',
+        '943764947', 5480.48, 'NEW', 2, 5, DEFAULT, NULL),
+       (202, 'aa1d568a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'jhon michael', 'huerta vergaray',
+        'jhonjairojafed@hotmail.com', '943764948', 11290.35, 'NEW', 2, 5, DEFAULT, NULL),
+       (203, 'aa1d5722-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Juan Rafael', 'Mejia Melo', 'gnr_1786@hotmail.com',
+        '986193221', 28446.15, 'NEW', 2, 4, DEFAULT, NULL),
+       (204, 'aa1d57b3-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Gino Paolo', 'Romero Talavera', '03200163@unmsm.edu.pe',
+        '968520776', 42336.92, 'NEW', 1, 6, DEFAULT, NULL),
+       (205, 'aa1d5843-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Paul Michels', 'CALVO PEREZ', 'lichar_zik@hotmail.com',
+        '992623604', 17288.28, 'NEW', 2, 5, DEFAULT, NULL),
+       (206, 'aa1d58d6-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Adderlyn  Tito', 'Palacios Rojas', 'www.adderlyn@gmail.com',
+        '954923400', 353.50, 'NEW', 2, 5, DEFAULT, NULL),
+       (207, 'aa1d5969-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jose Alexander', 'Montero Onofre',
+        'alexela_xd@yahoo.com.pe', '993795450', 20628.29, 'NEW', 2, 2, DEFAULT, NULL),
+       (208, 'aa1d59fc-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Ruben', 'Jimenez', 'rubenjim77@yahoo.es', '993024197',
+        46678.18, 'PUBLISHED', 2, 6, DEFAULT, NULL),
+       (209, 'aa1d5a8c-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Emerson ', 'Pastor', 'emersonlpb@gmail.com', '995770006',
+        39608.96, 'PUBLISHED', 1, 5, DEFAULT, NULL),
+       (210, 'aa1d5b1e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Gino Paul', 'Gonzales Custodio', 'paul_3549@hotmail.com',
+        '979965962', 4777.52, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (211, 'aa1d5bad-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Rafael Marcos', 'Vasquez Felipe',
+        'rafael_markos@hotmail.com', '943739427', 30088.99, 'PUBLISHED', 3, 1, DEFAULT, NULL),
+       (212, 'aa1d5c3f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jose Alberto', 'Yugar Ladines', 'gossgle@gmail.com',
+        '993646485', 33381.79, 'NEW', 3, 6, DEFAULT, NULL),
+       (213, 'aa1d5d45-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Silvia Patricia', 'Valdivia Heredia',
+        'patty_237@hotmail.com', '956236898', 12576.54, 'PUBLISHED', 3, 5, DEFAULT, NULL),
+       (214, 'aa1d5de9-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Omar', 'Palomino', 'omarc320@hotmail.com', '991807183',
+        9583.21, 'NEW', 2, 1, DEFAULT, NULL),
+       (215, 'aa1d5e80-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Claudel Helder', 'Dominguez Fernandez',
+        'helder.dominguez@gmail.com', '989732987', 68101.87, 'NEW', 2, 2, DEFAULT, NULL),
+       (216, 'aa1d5f19-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Adrian ', 'Rodriguez', 'aerodrig@gmail.com', '990421787',
+        82665.75, 'NEW', 2, 6, DEFAULT, NULL),
+       (217, 'aa1d5fab-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'yuri', 'arias', 'arias.arone.yuri@gmail.com', '985945681',
+        38068.74, 'NEW', 3, 5, DEFAULT, NULL),
+       (218, 'aa1d603b-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'jose joel', 'ramos tanca', 'joel2064@hotmail.com',
+        '985447228', 61455.26, 'NEW', 3, 1, DEFAULT, NULL),
+       (219, 'aa1d60ce-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'MARITZA', 'GUTARRA', 'maritzagc_sistemas@hotmail.com',
+        '985369589', 95505.58, 'NEW', 1, 6, DEFAULT, NULL),
+       (220, 'aa1d615d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Claudel Helder', 'Dominguez Fernandez',
+        'helder.dominguez@gmail.com', '989732988', 80554.78, 'NEW', 2, 1, DEFAULT, NULL),
+       (221, 'aa1d61ed-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Willian Pool', 'Rios Bardales', 'willianprb@hotmail.com',
+        '991301778', 94276.57, 'NEW', 1, 3, DEFAULT, NULL),
+       (222, 'aa1d627e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Roberto Jesus', 'Mejia Andrade', 'mejia_crema@hotmail.com',
+        '959109060', 11923.71, 'PUBLISHED', 2, 2, DEFAULT, NULL),
+       (223, 'aa1d630e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Luis Alberto', 'Supo Orihuela', 'luigi_max3@hotmail.com',
+        '980751209', 53134.48, 'PUBLISHED', 3, 6, DEFAULT, NULL),
+       (224, 'aa1d63a0-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Cesar Gustavo', 'Garay Reyes', 'cesarlbd@gmail.com',
+        '979737929', 59218.34, 'PUBLISHED', 1, 4, DEFAULT, NULL),
+       (225, 'aa1d6434-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'antonio', 'pereda bardales', 'pereda.antonio@gmail.com',
+        '998558338', 7898.40, 'NEW', 2, 1, DEFAULT, NULL),
+       (226, 'aa1d64ca-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'RICARDO EDUARDO', 'SALDANA CAMACHO', 'resc11@hotmail.com',
+        '997251070', 12185.07, 'PUBLISHED', 1, 7, DEFAULT, NULL),
+       (227, 'aa1d655c-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'GIOVANNA JULISSA', 'HARO SANCHEZ', 'julissahs2@hotmail.com',
+        '992743706', 39483.87, 'NEW', 2, 2, DEFAULT, NULL),
+       (228, 'aa1d65ef-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'favio ', 'zea brousset', 'faviozea@hotmail.com',
+        '988421313', 55839.84, 'NEW', 2, 5, DEFAULT, NULL),
+       (229, 'aa1d667f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'oscar ', 'palacios gutierrez', 'oscar_peruano@hotmail.com',
+        '998553701', 54769.44, 'NEW', 3, 4, DEFAULT, NULL),
+       (230, 'aa1d6712-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'JACQUELINE ', 'RAMON GOMEZ', 'jacquelin.rg@gmail.com',
+        '995041133', 62771.83, 'PUBLISHED', 3, 6, DEFAULT, NULL),
+       (231, 'aa1d67a6-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Omar Jesus', 'Olivos Aguero', 'olivosomar@gmail.com',
+        '990582582', 94323.50, 'NEW', 2, 1, DEFAULT, NULL),
+       (232, 'aa1d6838-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'ROSA VICTORIA', 'CHUQUISPUMA JESUS', 'rovixtoria@gmail.com',
+        '994840668', 68454.37, 'NEW', 3, 4, DEFAULT, NULL),
+       (233, 'aa1d68c7-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Dennys ', 'Ato Saavedra', 'dennysato@gmail.com',
+        '987366791', 39543.47, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (234, 'aa1d6960-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Carlos Moises', 'Gonzales Lopez',
+        'carlos_gl_12@hotmail.com', '956743153', 18425.19, 'NEW', 3, 3, DEFAULT, NULL),
+       (235, 'aa1d69fd-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'CHRISTIAN ', 'GUZMAN PASQUEL', 'reggae72@hotmail.com',
+        '998004235', 16589.99, 'PUBLISHED', 2, 7, DEFAULT, NULL),
+       (236, 'aa1d8b6a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'billie', 'amstrong', 'billi_123@hotmail.com', '1234567',
+        97707.71, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (237, 'aa1d8d7a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Andy', 'De La Cruz More', 'andy_aedo@hotmail.com',
+        '992328516', 70016.03, 'PUBLISHED', 3, 5, DEFAULT, NULL),
+       (238, 'aa1d8e2e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Josselin del Carmen', 'Pozo Roman',
+        'midnight_158@hotmail.es', '991305784', 1073.02, 'PUBLISHED', 1, 6, DEFAULT, NULL),
+       (239, 'aa1d8ed6-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'yasmin pamela', 'condor leon ', 'yasmin.pcl@hotmail.com',
+        '994382051', 96435.28, 'PUBLISHED', 1, 2, DEFAULT, NULL),
+       (240, 'aa1d8f6d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'John', 'Vargas', 'johnvargas@gmail.com', '99999999',
+        90456.11, 'NEW', 1, 1, DEFAULT, NULL),
+       (241, 'aa1d9000-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Henry', 'Huarsaya', 'hhuarsaya@gmail.com', '990224141',
+        15159.68, 'PUBLISHED', 3, 5, DEFAULT, NULL),
+       (242, 'aa1d908f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Elvis', 'Silva', 'nosativa@gmail.com', '945072697',
+        72544.49, 'NEW', 1, 2, DEFAULT, NULL),
+       (243, 'aa1d9124-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Carlos', 'Rojas', 'netizen.peru+limahackunmsm@gmail.com',
+        '12', 54799.79, 'NEW', 2, 4, DEFAULT, NULL),
+       (244, 'aa1d91b8-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Marcel Igor', 'Gutierrez Gavonel', 'gmarcelg@gmail.com',
+        '998495576', 20094.22, 'NEW', 1, 7, DEFAULT, NULL),
+       (245, 'aa1d924c-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'JOEL JULIO', 'ZEGARRA VALVERDE', 'jozegval@gmail.com',
+        '993474683', 53297.93, 'NEW', 1, 4, DEFAULT, NULL),
+       (246, 'aa1d92de-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'KARLA VANESSA', 'RUIDIAS ANAYA',
+        'KARLASANTIAGO28@GMAIL.COM', '980455739', 53463.80, 'PUBLISHED', 3, 2, DEFAULT, NULL),
+       (247, 'aa1d937f-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'CHRISTIAN PEDRO ', 'UCEDA RUIZ',
+        'christianlavoe@hotmail.com', '980471564', 20831.69, 'NEW', 2, 1, DEFAULT, NULL),
+       (248, 'aa1d941a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Johel Esteban', 'Cora Valeriano', 'johel057@hotmail.com',
+        '997199742', 14469.67, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (249, 'aa1d94b0-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Carlos Moises', 'Gonzales Lopez',
+        'carlos_gl_12@hotmail.com', '956743155', 75503.13, 'NEW', 2, 7, DEFAULT, NULL),
+       (250, 'aa1d9540-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Anthony Joel', 'Mateo Mendoza', 'virgo13_908@hotmail.com',
+        '989618257', 25516.46, 'NEW', 1, 3, DEFAULT, NULL),
+       (251, 'aa1d95d2-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Miguel Angel', 'Yaguilla', 'miyaguifiee@hotmail.com',
+        '997788123', 36156.82, 'NEW', 2, 2, DEFAULT, NULL),
+       (252, 'aa1d9666-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Magaly', 'Yucra  Puma', 'magy.sist@gmail.com', '986901532',
+        34797.83, 'PUBLISHED', 3, 6, DEFAULT, NULL),
+       (253, 'aa1d9704-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Victoria', 'Bustamante Toscano', 'victoriabt@hotmail.com',
+        '954444748', 6784.52, 'PUBLISHED', 2, 2, DEFAULT, NULL),
+       (254, 'aa1d979e-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Hugo Renzo', 'Rosales Saavedra', 'hrenzors@gmail.com',
+        '997541386', 8200.89, 'PUBLISHED', 2, 3, DEFAULT, NULL),
+       (255, 'aa1d9833-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Antonio Rafael', 'Galvez Horna',
+        'antoniogalvez75@hotmail.com', '976699871', 63122.53, 'NEW', 2, 4, DEFAULT, NULL),
+       (256, 'aa1d98cb-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'JOSE ALEJANDRO', 'SABASTIZAGAL ORELLANA',
+        'jsabastizagal@gmail.com', '956484547', 86704.61, 'NEW', 2, 4, DEFAULT, NULL),
+       (257, 'aa1d9968-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'RAUL', 'ESTACIO RIOS', 'raul.estacio.r@gmail.com',
+        '980773388', 26741.14, 'NEW', 2, 3, DEFAULT, NULL),
+       (258, 'aa1d99ff-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Felix', 'Huamani Fernandez', '24infelix24@gmail.com',
+        '966143252', 48899.09, 'NEW', 2, 7, DEFAULT, NULL),
+       (259, 'aa1d9a95-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jorge Luis', 'Chavez Soto', 'jlchavezs@gmail.com',
+        '998520246', 6242.16, 'PUBLISHED', 2, 4, DEFAULT, NULL),
+       (260, 'aa1d9b39-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Gonzalo', 'Soto', 'gzlosoto@hotmail.com', '987526709',
+        79956.31, 'NEW', 2, 2, DEFAULT, NULL),
+       (261, 'aa1d9bd7-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Abraham', 'Amasifuen', 'dosho17@hotmail.com', '947468511',
+        19407.63, 'NEW', 2, 5, DEFAULT, NULL),
+       (262, 'aa1d9c8a-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Isaias', 'Mayon', 'atodacuerda@hotmail.com', '992769004',
+        80098.39, 'PUBLISHED', 3, 5, DEFAULT, NULL),
+       (263, 'aa1d9d37-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'etrterte', 'treterrtertrt', 'tewte@2.c', '885', 1729.42,
+        'NEW', 2, 5, DEFAULT, NULL),
+       (264, 'aa1d9dd4-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'ERIKA VALERIA', 'MINAN CASTILLO', 'erikavaleriam@yahoo.es',
+        '998580476', 4902.36, 'PUBLISHED', 2, 5, DEFAULT, NULL),
+       (265, 'aa1d9e6d-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Jose Carlos', 'Ramirez tello', 'jcramireztello@gmail.com',
+        '986252899', 41181.63, 'NEW', 3, 2, DEFAULT, NULL),
+       (266, 'aa1d9f00-e21a-11e9-bc5f-d8cb8a9f5d7b', '--', 'Bermaly Araceli', 'Revilla Ramos', 'bermaly@gmail.com',
+        '992926916', 28086.28, 'NEW', 2, 4, DEFAULT, NULL);
+/*!40000 ALTER TABLE `LEAD`
+    ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -92,19 +636,22 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `USER`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `USER` (
-  `USR_ID` bigint(20) NOT NULL AUTO_INCREMENT,
-  `USR_FIRST_NAME` varchar(255) NOT NULL,
-  `USR_LAST_NAME` varchar(255) NOT NULL,
-  `USR_EMAIL` varchar(255) NOT NULL,
-  `USR_PASSWORD` varchar(255) NOT NULL,
-  `USR_CREATED_DATE` datetime DEFAULT NULL,
-  `USR_MODIFIED_DATE` datetime DEFAULT NULL,
-  PRIMARY KEY (`USR_ID`),
-  UNIQUE KEY `USR_EMAIL` (`USR_EMAIL`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+CREATE TABLE `USER`
+(
+    `USR_ID`            bigint(20)   NOT NULL AUTO_INCREMENT,
+    `USR_FIRST_NAME`    varchar(255) NOT NULL,
+    `USR_LAST_NAME`     varchar(255) NOT NULL,
+    `USR_EMAIL`         varchar(255) NOT NULL,
+    `USR_PASSWORD`      varchar(255) NOT NULL,
+    `USR_CREATED_DATE`  datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `USR_MODIFIED_DATE` datetime DEFAULT NULL,
+    PRIMARY KEY (`USR_ID`),
+    UNIQUE KEY `USR_EMAIL` (`USR_EMAIL`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 4
+  DEFAULT CHARSET = utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,18 +659,23 @@ CREATE TABLE `USER` (
 --
 
 LOCK TABLES `USER` WRITE;
-/*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` VALUES (1,'John','Miller','user@javachap.com','javachap','2010-10-31 18:07:09','2010-10-31 18:07:09'),(2,'Cesar','Diaz','cesar.dl88@gmail.com','123456','2010-10-31 21:44:34','2010-10-31 21:44:40'),(3,'Carlos','Suarez','user2@javachap.com','javachap',NULL,NULL);
-/*!40000 ALTER TABLE `USER` ENABLE KEYS */;
+/*!40000 ALTER TABLE `USER`
+    DISABLE KEYS */;
+INSERT INTO `USER`
+VALUES (1, 'John', 'Miller', 'user@javachap.com', 'javachap', '2010-10-31 18:07:09', '2010-10-31 18:07:09'),
+       (2, 'Cesar', 'Diaz', 'cesar.dl88@gmail.com', '123456', '2010-10-31 21:44:34', '2010-10-31 21:44:40'),
+       (3, 'Carlos', 'Suarez', 'user2@javachap.com', 'javachap', DEFAULT, NULL);
+/*!40000 ALTER TABLE `USER`
+    ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+/*!40103 SET TIME_ZONE = @OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE = @OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
--- Dump completed on 2010-11-01  3:58:08
+-- Dump completed on 2019-09-28 18:10:49

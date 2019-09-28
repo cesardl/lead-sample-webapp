@@ -14,9 +14,6 @@ public class HibernateUtils {
     private static final SessionFactory sessionFactory;
     private static final ThreadLocal<Session> session = new ThreadLocal<>();
 
-    private HibernateUtils() {
-    }
-
     static {
         try {
             // Create the SessionFactory
@@ -26,6 +23,9 @@ public class HibernateUtils {
             LOG.error("Initial SessionFactory creation failed.", ex);
             throw new ExceptionInInitializerError(ex);
         }
+    }
+
+    private HibernateUtils() {
     }
 
     public static Session currentSession() throws HibernateException {
@@ -40,7 +40,7 @@ public class HibernateUtils {
 
     public static void closeSession() throws HibernateException {
         Session s = session.get();
-        session.set(null);
+        session.remove();
         if (s != null) {
             s.close();
         }

@@ -15,3 +15,17 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.92-b14, mixed mode)
 ```
 mysql  Ver 14.14 Distrib 5.7.13, for Win32 (AMD64)
 ```
+
+## For usage
+- Database backup
+```
+mysqldump -u travis lead -r database/lead_schema.sql
+```
+
+- Database container
+```
+docker run --name lead -e MYSQL_ROOT_PASSWORD=lead -p 3306:3306 -d mysql:5.6.33
+```
+
+- Unicode list:
+[UTF-8 C1 Controls and Latin1 Supplement](https://www.w3schools.com/charsets/ref_utf_latin1_supplement.asp)

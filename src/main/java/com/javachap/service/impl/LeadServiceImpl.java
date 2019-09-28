@@ -9,6 +9,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -18,7 +20,11 @@ import java.util.List;
 public class LeadServiceImpl extends ServiceImpl<Lead> implements LeadService {
 
     private static final long serialVersionUID = 872905902784301462L;
+
+    private static final Logger LOG = LoggerFactory.getLogger(LeadServiceImpl.class);
+
     private static final String LEADS_BY_USER_QUERY = "from Lead lead where lead.owner.id = :UserId";
+
     /**
      * Singleton Instance of LeadServiceImpl
      */
@@ -41,7 +47,7 @@ public class LeadServiceImpl extends ServiceImpl<Lead> implements LeadService {
     /* (non-Javadoc)
      * @see com.javachap.service.LeadService#delete(com.javachap.domain.Lead)
      */
-    public void delete(Lead lead) {
+    public void delete(final Lead lead) {
         Session session = HibernateUtils.currentSession();
         Transaction tx = null;
         boolean rollback = true;
@@ -63,7 +69,8 @@ public class LeadServiceImpl extends ServiceImpl<Lead> implements LeadService {
     /* (non-Javadoc)
      * @see com.javachap.service.LeadService#getLead(java.lang.Long)
      */
-    public Lead getLead(Long id) {
+    public Lead getLead(final Long id) {
+        LOG.debug("DB Query :: lead by id '{}'", id);
         Lead lead;
         try {
             Session session = HibernateUtils.currentSession();
@@ -79,7 +86,7 @@ public class LeadServiceImpl extends ServiceImpl<Lead> implements LeadService {
      * @see com.javachap.service.LeadService#getLeadsByUser(com.javachap.domain.User)
      */
     @SuppressWarnings("unchecked")
-    public List<Lead> getLeadsByUser(User user) {
+    public List<Lead> getLeadsByUser(final User user) {
         List<Lead> leads;
         try {
             Session session = HibernateUtils.currentSession();

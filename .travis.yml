@@ -1,3 +1,4 @@
+dist: trusty
 language: java
 sudo: false
 install: true
@@ -15,10 +16,12 @@ jdk:
   - oraclejdk8
 
 git:
-  depth: 3
+  # Travis CI uses shallow clone to speed up build times, but a truncated SCM history
+  # may cause issues when SonarCloud computes blame data.
+  depth: false
 
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS lead CHARACTER SET utf8 COLLATE utf8_general_ci;'
+  - mysql -e 'CREATE DATABASE lead CHARACTER SET utf8 COLLATE utf8_general_ci;'
   - mysql -u travis lead < database/lead_schema.sql
 
 script:

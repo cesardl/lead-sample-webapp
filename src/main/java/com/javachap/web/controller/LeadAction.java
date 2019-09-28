@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class LeadAction extends SecuredAction {
 
     // Forwards
     private static final String FORWARD_EDIT_LEAD = "leadCreateEdit";
+    private static final String FORWARD_HOME = "home";
 
     // Messages
     private static final String ERROR_LABEL_MANDATORY = "error.label.mandatory";
@@ -41,15 +43,16 @@ public class LeadAction extends SecuredAction {
         String leadFormAction = leadForm.getAction();
         LOG.info("Form action '{}'", leadFormAction);
 
-        if ("save".equals(leadFormAction)) {
+        if ("save".equalsIgnoreCase(leadFormAction)) {
             forward = saveLead(mapping, leadForm, request);
 
         } else if ("cancel".equalsIgnoreCase(leadFormAction)) {
-            forward = mapping.findForward("home");
+            forward = mapping.findForward(FORWARD_HOME);
 
         } else if ("edit".equalsIgnoreCase(leadFormAction)) {
             Long leadId = leadForm.getLeadId();
             Lead lead = ServiceUtils.getLeadService().getLead(leadId);
+            LOG.debug("Lead to edit {}", lead);
             String id = String.valueOf(ServiceUtils.getCategoryService().getCategory(lead.getCategory().getId()).getId());
             leadForm.setCategory(id);
             leadForm.setTitle(lead.getTitle());
@@ -67,22 +70,24 @@ public class LeadAction extends SecuredAction {
         } else if ("delete".equalsIgnoreCase(leadFormAction)) {
             leadForm.setAction(leadFormAction);
             leadForm.setLeadId(leadForm.getLeadId());
-            forward = mapping.findForward("home");
+            forward = mapping.findForward(FORWARD_HOME);
 
         } else if ("publish".equalsIgnoreCase(leadFormAction)) {
             LeadService leadService = ServiceUtils.getLeadService();
             Lead lead = leadService.getLead(leadForm.getLeadId());
+            LOG.debug("Lead to publish {}", lead);
             lead.setStatus(Lead.Status.PUBLISHED.toString());
             lead = leadService.save(lead);
             LOG.info("Published lead: {}", lead);
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message.lead.publish"));
             saveMessages(request, messages);
-            forward = mapping.findForward("home");
+            forward = mapping.findForward(FORWARD_HOME);
 
         } else if (leadForm.getLeadId() != null) {
-            LOG.info("Showing lead detail");
+            LOG.info("Showing lead detail for {}", leadForm.getLeadId());
             Lead lead = ServiceUtils.getLeadService().getLead(leadForm.getLeadId());
+            LOG.debug("Lead obtained {}", lead);
             request.setAttribute("lead", lead);
             forward = mapping.getInputForward();
         } else {
@@ -100,22 +105,20 @@ public class LeadAction extends SecuredAction {
             Lead lead;
             LeadService leadService = ServiceUtils.getLeadService();
             Long leadId = leadForm.getLeadId();
-            if (leadId != null && leadId > 0) {
-                lead = leadService.getLead(leadId);
-                lead.setModifiedDate(new Date());
-
-                ActionMessages messages = new ActionMessages();
-                messages.add(ActionMessages.GLOBAL_MESSAGE,
-                        new ActionMessage("message.lead.update"));
-                saveMessages(request, messages);
-            } else {
+            if (leadId <= 0) {
                 lead = new LeadImpl();
                 lead.setStatus(Lead.Status.NEW.toString());
                 lead.setCreatedDate(new Date());
 
                 ActionMessages messages = new ActionMessages();
-                messages.add(ActionMessages.GLOBAL_MESSAGE,
-                        new ActionMessage("message.lead.insert"));
+                messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message.lead.insert"));
+                saveMessages(request, messages);
+            } else {
+                lead = leadService.getLead(leadId);
+                lead.setModifiedDate(new Date());
+
+                ActionMessages messages = new ActionMessages();
+                messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message.lead.update"));
                 saveMessages(request, messages);
             }
             Long categoryId = Long.parseLong(leadForm.getCategory());
@@ -129,11 +132,11 @@ public class LeadAction extends SecuredAction {
             lead.setLastName(leadForm.getLastName());
             lead.setEmail(leadForm.getEmail());
             lead.setPhone(leadForm.getPhone());
-            lead.setPrice(Float.parseFloat(leadForm.getPrice()));
+            lead.setPrice(new BigDecimal(leadForm.getPrice()));
             lead.setOwner(user);
             lead = leadService.save(lead);
             LOG.info("Saved lead: {}", lead);
-            return mapping.findForward("home");
+            return mapping.findForward(FORWARD_HOME);
         } else {
             saveErrors(request, errors);
             return mapping.findForward(FORWARD_EDIT_LEAD);
@@ -142,25 +145,25 @@ public class LeadAction extends SecuredAction {
 
     private ActionErrors validForm(final LeadForm leadForm) {
         ActionErrors errors = new ActionErrors();
-        if ("Select any Category".equals(leadForm.getCategory())) {
+        if (Integer.parseInt(leadForm.getCategory()) == 0) {
             errors.add("category", new ActionMessage(ERROR_LABEL_MANDATORY));
         }
-        if (leadForm.getTitle().trim().length() < 1 || leadForm.getTitle() == null) {
+        if (leadForm.getTitle().trim().isEmpty()) {
             errors.add("title", new ActionMessage(ERROR_LABEL_MANDATORY));
         }
-        if (leadForm.getDescription().trim().length() < 1 || leadForm.getDescription() == null) {
+        if (leadForm.getDescription().trim().isEmpty()) {
             errors.add("description", new ActionMessage(ERROR_LABEL_MANDATORY));
         }
-        if (leadForm.getFirstName().trim().length() < 1 || leadForm.getFirstName() == null) {
+        if (leadForm.getFirstName().trim().isEmpty()) {
             errors.add("firstName", new ActionMessage(ERROR_LABEL_MANDATORY));
         }
-        if (leadForm.getLastName().trim().length() < 1 || leadForm.getLastName() == null) {
+        if (leadForm.getLastName().trim().isEmpty()) {
             errors.add("lastName", new ActionMessage(ERROR_LABEL_MANDATORY));
         }
-        if (leadForm.getEmail().trim().length() < 1 || leadForm.getEmail() == null) {
+        if (leadForm.getEmail().trim().isEmpty()) {
             errors.add("email", new ActionMessage(ERROR_LABEL_MANDATORY));
         }
-        if (leadForm.getPrice().trim().length() < 1 || leadForm.getPrice() == null) {
+        if (leadForm.getPrice().trim().isEmpty()) {
             errors.add(FORM_PROPERTY_PRICE, new ActionMessage(ERROR_LABEL_MANDATORY));
         } else {
             try {

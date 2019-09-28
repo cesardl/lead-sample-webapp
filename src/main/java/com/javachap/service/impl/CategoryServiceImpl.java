@@ -7,6 +7,8 @@ import com.javachap.utils.HibernateUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ import java.util.List;
 public class CategoryServiceImpl extends ServiceImpl<Category> implements CategoryService {
 
     private static final long serialVersionUID = 380026904541710183L;
+
+    private static final Logger LOG = LoggerFactory.getLogger(CategoryServiceImpl.class);
+
     private static final String ALL_CATEGORIES_QUERY = "from Category category";
     private static final String CATEGORY_BY_NAME_QUERY = "from Category category where category.name = :CategoryName";
 
@@ -43,6 +48,7 @@ public class CategoryServiceImpl extends ServiceImpl<Category> implements Catego
      */
     @SuppressWarnings("unchecked")
     public List<Category> getAllCategories() {
+        LOG.debug("DB Query :: all categories");
         List<Category> categories;
         try {
             Session session = HibernateUtils.currentSession();
@@ -58,7 +64,8 @@ public class CategoryServiceImpl extends ServiceImpl<Category> implements Catego
     /* (non-Javadoc)
      * @see com.javachap.service.CategoryService#getCategory(java.lang.Long)
      */
-    public Category getCategory(Long categoryId) {
+    public Category getCategory(final Long categoryId) {
+        LOG.debug("DB Query :: category by id '{}'", categoryId);
         Category category;
         try {
             Session session = HibernateUtils.currentSession();
@@ -73,7 +80,7 @@ public class CategoryServiceImpl extends ServiceImpl<Category> implements Catego
     /* (non-Javadoc)
      * @see com.javachap.service.CategoryService#getCategory(java.lang.String)
      */
-    public Category getCategory(String categoryName) {
+    public Category getCategory(final String categoryName) {
         Category category = null;
         try {
             Session session = HibernateUtils.currentSession();

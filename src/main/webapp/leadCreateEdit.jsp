@@ -57,7 +57,7 @@
                         </h3>
                         <p id="errorMsg">
                             <bean:message key="error.label.subName1" locale="display"/>
-                            <strong> <bean:message key="error.label.subName2" locale="display"/> </strong>
+                            &nbsp;<strong><bean:message key="error.label.subName2" locale="display"/></strong>&nbsp;
                             <bean:message key="error.label.subName3" locale="display"/>
                         </p>
                     </li>
@@ -71,7 +71,7 @@
                         </label>
                         <div>
                             <html:select styleClass="field select medium" styleId="Field7" property="category" tabindex="1" >
-                                <html:option value="Select any Category">
+                                <html:option value="0">
                                     <bean:message key="label.option.default" locale="display" />
                                 </html:option>
                                 <html:optionsCollection name="categoryList" label="name" value="id" />

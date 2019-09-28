@@ -4,6 +4,8 @@ import com.javachap.domain.Category;
 import com.javachap.domain.Lead;
 import com.javachap.domain.User;
 
+import java.math.BigDecimal;
+
 public class LeadImpl extends DomainImpl implements Lead {
 
     private static final long serialVersionUID = 4970184160256555723L;
@@ -13,7 +15,7 @@ public class LeadImpl extends DomainImpl implements Lead {
     private String lastName;
     private String email;
     private String phone;
-    private Float price;
+    private BigDecimal price;
     private Category category;
     private User owner;
     private String status;
@@ -66,11 +68,11 @@ public class LeadImpl extends DomainImpl implements Lead {
         this.phone = phone;
     }
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

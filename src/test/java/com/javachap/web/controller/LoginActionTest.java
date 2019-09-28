@@ -50,4 +50,12 @@ public class LoginActionTest extends MockStrutsTestCase {
         verifyActionErrors(new String[]{"error.login.failed"});
         assertNull(getSession().getAttribute("user"));
     }
+
+    public void testFromLogoutForwarding() {
+        setRequestPathInfo("/login");
+        actionPerform();
+
+        verifyInputForward();
+        verifyNoActionErrors();
+    }
 }
