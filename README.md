@@ -1,4 +1,4 @@
-# Lead Sample Webapp [![Build Status](https://travis-ci.org/cesardl/lead-sample-webapp.svg?branch=master)](https://travis-ci.org/cesardl/lead-sample-webapp) [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.javachap.lead-sample-webapp&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.javachap.lead-sample-webapp) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.javachap.lead-sample-webapp&metric=coverage)](https://sonarcloud.io/component_measures?id=com.javachap.lead-sample-webapp&metric=coverage)
+# Lead Sample Webapp
 
 CRUD application with Struts and MySQL created by Javachap and upgraded by me.
 
@@ -6,14 +6,14 @@ CRUD application with Struts and MySQL created by Javachap and upgraded by me.
 
 - JDK
 ```
-java version "1.8.0_92"
-Java(TM) SE Runtime Environment (build 1.8.0_92-b14)
-Java HotSpot(TM) 64-Bit Server VM (build 25.92-b14, mixed mode)
+java version "11.0.9" 2020-10-20 LTS
+Java(TM) SE Runtime Environment 18.9 (build 11.0.9+7-LTS)
+Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.9+7-LTS, mixed mode)
 ```
 
 - Database
 ```
-mysql  Ver 14.14 Distrib 5.7.13, for Win32 (AMD64)
+mysql  Ver 8.4.2 for Linux on x86_64 (MySQL Community Server - GPL)
 ```
 
 ## For usage
@@ -24,7 +24,7 @@ mysqldump -u travis lead -r database/lead_schema.sql
 
 - Database container
 ```
-docker run --name lead -e MYSQL_ROOT_PASSWORD=lead -p 3306:3306 -d mysql:5.6.33
+docker run --name mysql-v8 -p 3310:3306 --restart on-failure -e MYSQL_DATABASE=lead -e MYSQL_ROOT_PASSWORD=rootroot -e TZ='America/Lima' -d mysql:8.4.2
 ```
 
 - Unicode list:

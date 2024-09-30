@@ -3,19 +3,16 @@ package com.javachap.service.impl;
 import com.javachap.domain.Category;
 import com.javachap.service.CategoryService;
 import com.javachap.service.ServiceUtils;
-import org.junit.Test;
-
-import static org.junit.Assert.assertNotNull;
+import junit.framework.TestCase;
 
 /**
  * Created on 28/09/2019.
  *
  * @author Cesardl
  */
-public class CategoryServiceImplTest {
+public class CategoryServiceImplTest extends TestCase {
 
-    @Test
-    public void getCategoryByNameTest() {
+    public void testGetCategoryByName() {
         CategoryService service = ServiceUtils.getCategoryService();
 
         Category result = service.getCategory("Insurance");

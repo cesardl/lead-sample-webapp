@@ -52,8 +52,8 @@ public class CategoryServiceImpl extends ServiceImpl<Category> implements Catego
         List<Category> categories;
         try {
             Session session = HibernateUtils.currentSession();
-            Query query = session.createQuery(ALL_CATEGORIES_QUERY);
-            categories = (List<Category>) query.list();
+            Query<Category> query = session.createQuery(ALL_CATEGORIES_QUERY);
+            categories = query.list();
             HibernateUtils.closeSession();
         } catch (HibernateException e) {
             throw new ServiceException(e);
@@ -69,7 +69,7 @@ public class CategoryServiceImpl extends ServiceImpl<Category> implements Catego
         Category category;
         try {
             Session session = HibernateUtils.currentSession();
-            category = (Category) session.get(Category.class, categoryId);
+            category = session.get(Category.class, categoryId);
             HibernateUtils.closeSession();
         } catch (HibernateException e) {
             throw new ServiceException(e);
